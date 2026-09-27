@@ -1,0 +1,6 @@
+{
+  "name": "Keshari Dhaba & Family Restaurant, Sonbhadra",
+  "description": "Authentic North Indian Dhaba cuisine in Robertsganj, Sonbhadra. Desi ghee specialties, tandoori delicacies, family garden dining, direct WhatsApp table reservations, and Sonbhadra tourist guide.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
