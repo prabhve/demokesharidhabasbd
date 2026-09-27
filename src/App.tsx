@@ -50,7 +50,7 @@ export default function App() {
   const totalItemCount = Object.values(orderItems).reduce((sum, count) => sum + count, 0);
 
   return (
-    <div className="min-h-screen bg-[#0c0907] text-stone-100 flex flex-col selection:bg-amber-500 selection:text-stone-950 font-sans">
+    <div className="min-h-screen bg-[#0c0907] text-stone-100 flex flex-col selection:bg-amber-500 selection:text-stone-950 font-sans antialiased overflow-x-hidden">
       {/* Real-time Golden Luxury Scroll Progress Bar */}
       <ScrollProgressBar />
 
@@ -61,22 +61,22 @@ export default function App() {
       />
 
       {/* Main Content Sections with Scroll-In Animations */}
-      <main className="flex-1">
+      <main className="flex-1 pb-16 lg:pb-0">
         {/* Home / Hero Section with Parallax Background */}
         <Hero />
 
         {/* About Us Section */}
-        <AnimatedSection direction="up" threshold={0.1}>
+        <AnimatedSection direction="up" threshold={0.08}>
           <AboutSection />
         </AnimatedSection>
 
         {/* Gallery Section - Full-Width Masonry Grid */}
-        <AnimatedSection direction="up" threshold={0.08}>
+        <AnimatedSection direction="up" threshold={0.06}>
           <GallerySection />
         </AnimatedSection>
 
         {/* Food Menu & Dhaba Specialties */}
-        <AnimatedSection direction="up" threshold={0.08}>
+        <AnimatedSection direction="up" threshold={0.06}>
           <MenuSection
             orderItems={orderItems}
             onAddItem={handleAddItem}
@@ -86,22 +86,22 @@ export default function App() {
         </AnimatedSection>
 
         {/* Table Booking through WhatsApp Direct Message */}
-        <AnimatedSection direction="up" threshold={0.1}>
+        <AnimatedSection direction="up" threshold={0.08}>
           <TableBookingSection />
         </AnimatedSection>
 
         {/* Sonbhadra Famous Tourist Places with Navigation */}
-        <AnimatedSection direction="up" threshold={0.08}>
+        <AnimatedSection direction="up" threshold={0.06}>
           <TouristPlacesSection />
         </AnimatedSection>
 
         {/* Testimonials & Verified Google Reviews */}
-        <AnimatedSection direction="up" threshold={0.1}>
+        <AnimatedSection direction="up" threshold={0.08}>
           <TestimonialsSection />
         </AnimatedSection>
 
         {/* Contact Us & Integrated Google Maps Location */}
-        <AnimatedSection direction="up" threshold={0.08}>
+        <AnimatedSection direction="up" threshold={0.06}>
           <ContactSection />
         </AnimatedSection>
       </main>
@@ -122,29 +122,32 @@ export default function App() {
         onClearOrder={handleClearOrder}
       />
 
-      {/* Sticky Mobile Quick Action Bar */}
-      <aside aria-label="Quick Actions" className="lg:hidden fixed bottom-0 left-0 right-0 z-30 bg-[#120e0a]/95 backdrop-blur-md border-t border-amber-900/40 px-3 py-2 flex items-center justify-between gap-2 shadow-2xl">
+      {/* Sticky Mobile Quick Action Bar with Touch Compliance (>= 44px touch targets) */}
+      <aside
+        aria-label="Quick Mobile Actions"
+        className="lg:hidden fixed bottom-0 left-0 right-0 z-30 bg-[#120e0a]/95 backdrop-blur-md border-t border-amber-900/40 px-3 py-2 flex items-center justify-between gap-2 shadow-2xl"
+      >
         <a
           href={`tel:${RESTAURANT_INFO.phonePrimary.replace(/\s+/g, '')}`}
-          className="flex-1 py-2.5 px-3 bg-[#1c1612] hover:bg-[#282019] text-stone-200 text-xs font-semibold uppercase tracking-wider rounded-xl flex items-center justify-center gap-1.5 transition-colors border border-amber-900/30"
+          className="flex-1 py-3 px-3 bg-[#1c1612] hover:bg-[#282019] active:bg-[#282019] text-stone-200 text-xs font-semibold uppercase tracking-wider rounded-xl flex items-center justify-center gap-1.5 transition-colors border border-amber-900/30 min-h-[44px] touch-manipulation"
         >
-          <Phone className="w-3.5 h-3.5 text-amber-400" />
+          <Phone className="w-4 h-4 text-amber-400" />
           <span>Call</span>
         </a>
 
         <a
           href="#menu"
-          className="py-2.5 px-3 bg-[#1c1612] hover:bg-[#282019] text-amber-300 text-xs font-semibold uppercase tracking-wider rounded-xl flex items-center justify-center gap-1.5 transition-colors border border-amber-900/30"
+          className="py-3 px-3.5 bg-[#1c1612] hover:bg-[#282019] active:bg-[#282019] text-amber-300 text-xs font-semibold uppercase tracking-wider rounded-xl flex items-center justify-center gap-1.5 transition-colors border border-amber-900/30 min-h-[44px] touch-manipulation"
         >
-          <Utensils className="w-3.5 h-3.5 text-amber-400" />
+          <Utensils className="w-4 h-4 text-amber-400" />
           <span>Menu</span>
         </a>
 
         <a
           href="#booking"
-          className="flex-1 py-2.5 px-3 bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-500 hover:to-emerald-600 text-white text-xs font-bold uppercase tracking-wider rounded-xl flex items-center justify-center gap-1.5 transition-colors shadow-md border border-emerald-400/30"
+          className="flex-1 py-3 px-3 bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-500 hover:to-emerald-600 active:from-emerald-700 active:to-emerald-800 text-white text-xs font-bold uppercase tracking-wider rounded-xl flex items-center justify-center gap-1.5 transition-colors shadow-md border border-emerald-400/30 min-h-[44px] touch-manipulation"
         >
-          <MessageCircle className="w-3.5 h-3.5 text-emerald-200" />
+          <MessageCircle className="w-4 h-4 text-emerald-200" />
           <span>Book WhatsApp</span>
         </a>
       </aside>

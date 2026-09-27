@@ -19,7 +19,7 @@ export const Hero: React.FC = () => {
   return (
     <section
       ref={containerRef}
-      className="relative overflow-hidden bg-[#0c0907] text-white pt-12 pb-20 lg:py-28 border-b border-amber-500/20"
+      className="relative overflow-hidden bg-[#0c0907] text-white pt-8 pb-16 sm:pt-12 sm:pb-20 lg:py-28 border-b border-amber-500/20"
     >
       {/* Background Ambience Layer with subtle scroll parallax */}
       <motion.div
@@ -40,20 +40,20 @@ export const Hero: React.FC = () => {
         style={{ opacity: contentOpacity }}
         className="relative max-w-7xl mx-auto px-4 sm:px-6"
       >
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-14 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-12 lg:gap-14 items-center">
           {/* Left Column: Atmospheric Restaurant Brand Story (7 cols) */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="lg:col-span-7 space-y-6"
+            className="lg:col-span-7 space-y-5 sm:space-y-6"
           >
             {/* Subtle Royal Badge */}
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6, delay: 0.1 }}
-              className="inline-flex items-center gap-2.5 px-3 py-1.5 rounded-full bg-amber-950/70 border border-amber-500/30 text-xs font-semibold uppercase tracking-widest text-amber-300 backdrop-blur-xs shadow-md"
+              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-amber-950/70 border border-amber-500/30 text-[11px] sm:text-xs font-semibold uppercase tracking-widest text-amber-300 backdrop-blur-xs shadow-md"
             >
               <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-ping" />
               <span>Robertsganj · Sonbhadra, Uttar Pradesh</span>
@@ -66,11 +66,11 @@ export const Hero: React.FC = () => {
               transition={{ duration: 0.7, delay: 0.2 }}
               className="space-y-2"
             >
-              <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-stone-100 leading-[1.12]">
+              <h1 className="font-serif text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-stone-100 leading-[1.18]">
                 Highway Culinary Heritage, <br />
                 <span className="text-gold-gradient italic font-normal">Pure Desi Ghee</span> Delicacies.
               </h1>
-              <p className="font-display text-lg sm:text-xl text-amber-200/80 italic tracking-wide">
+              <p className="font-display text-base sm:text-xl text-amber-200/80 italic tracking-wide">
                 "शुद्ध देसी घी और पारंपरिक मिट्टी के तंदूर का असली ज़ायका"
               </p>
             </motion.div>
@@ -79,7 +79,7 @@ export const Hero: React.FC = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.7, delay: 0.3 }}
-              className="text-stone-300 text-sm sm:text-base leading-relaxed max-w-2xl font-light"
+              className="text-stone-300 text-xs sm:text-base leading-relaxed max-w-2xl font-light"
             >
               Welcome to <strong className="text-amber-300 font-semibold">Keshari Dhaba & Family Restaurant</strong> at Amarati, Robertsganj. 
               Savor slow-simmered Handi Dal Tadka, rich Paneer Butter Masala, charred clay-tandoor rotis, and the grand Maharaja Thali. 
@@ -91,31 +91,31 @@ export const Hero: React.FC = () => {
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.4 }}
-              className="flex flex-wrap items-center gap-y-2 gap-x-4 text-xs text-stone-300 pt-1"
+              className="flex flex-wrap items-center gap-y-2 gap-x-3 sm:gap-x-4 text-xs text-stone-300 pt-1"
             >
               <div className="flex items-center gap-1.5 font-semibold text-amber-300 bg-amber-950/40 px-2.5 py-1 rounded border border-amber-600/30">
-                <Star className="w-4 h-4 fill-amber-400 text-amber-400" />
-                <span className="tabular-nums font-bold text-sm">4.0 / 5.0</span>
-                <span className="text-stone-400 font-normal text-[11px]">(520+ Reviews)</span>
+                <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
+                <span className="tabular-nums font-bold text-xs sm:text-sm">4.0 / 5.0</span>
+                <span className="text-stone-400 font-normal text-[10px] sm:text-[11px]">(520+ Reviews)</span>
               </div>
               <span className="text-amber-900">•</span>
-              <span className="text-stone-300">100% Pure Desi Ghee</span>
+              <span className="text-stone-300 text-[11px] sm:text-xs">100% Desi Ghee</span>
               <span className="text-amber-900">•</span>
-              <span className="text-stone-300">AC Hall & Garden Courtyard</span>
+              <span className="text-stone-300 text-[11px] sm:text-xs">AC Hall & Garden</span>
               <span className="text-amber-900">•</span>
-              <span className="text-stone-300">Pure Vegetarian</span>
+              <span className="text-stone-300 text-[11px] sm:text-xs">Pure Vegetarian</span>
             </motion.div>
 
-            {/* Primary Action Buttons */}
+            {/* Primary Action Buttons - Mobile Full Width on < sm */}
             <motion.div
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.5 }}
-              className="flex flex-wrap items-center gap-3 pt-2"
+              className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-2"
             >
               <a
                 href="#menu"
-                className="px-6 py-3.5 text-xs sm:text-sm font-semibold uppercase tracking-wider text-stone-950 bg-gradient-to-r from-amber-400 via-amber-500 to-amber-400 hover:from-amber-300 hover:to-amber-400 rounded-lg transition-all duration-300 flex items-center gap-2 shadow-lg shadow-amber-950/50 border border-amber-300/40 hover:scale-102 cursor-pointer"
+                className="px-6 py-3.5 text-xs sm:text-sm font-semibold uppercase tracking-wider text-stone-950 bg-gradient-to-r from-amber-400 via-amber-500 to-amber-400 hover:from-amber-300 hover:to-amber-400 rounded-xl transition-all duration-300 flex items-center justify-center gap-2 shadow-lg shadow-amber-950/50 border border-amber-300/40 hover:scale-102 cursor-pointer min-h-[44px]"
               >
                 <Utensils className="w-4 h-4" />
                 <span>Explore Full Menu</span>
@@ -124,17 +124,17 @@ export const Hero: React.FC = () => {
 
               <a
                 href="#booking"
-                className="px-6 py-3.5 text-xs sm:text-sm font-semibold uppercase tracking-wider text-white bg-emerald-700 hover:bg-emerald-600 rounded-lg transition-all duration-300 flex items-center gap-2 shadow-lg shadow-emerald-950/40 border border-emerald-500/30 hover:scale-102 cursor-pointer"
+                className="px-6 py-3.5 text-xs sm:text-sm font-semibold uppercase tracking-wider text-white bg-emerald-700 hover:bg-emerald-600 rounded-xl transition-all duration-300 flex items-center justify-center gap-2 shadow-lg shadow-emerald-950/40 border border-emerald-500/30 hover:scale-102 cursor-pointer min-h-[44px]"
               >
                 <MessageCircle className="w-4 h-4 text-emerald-300" />
-                <span>WhatsApp Table Booking</span>
+                <span>WhatsApp Booking</span>
               </a>
 
               <a
                 href={RESTAURANT_INFO.googleMapsUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-4 py-3.5 text-xs sm:text-sm font-medium text-stone-300 hover:text-white bg-stone-900/80 hover:bg-stone-800 border border-amber-900/40 rounded-lg transition-colors flex items-center gap-2 hover:scale-102 cursor-pointer"
+                className="px-4 py-3 text-xs sm:text-sm font-medium text-stone-300 hover:text-white bg-stone-900/80 hover:bg-stone-800 border border-amber-900/40 rounded-xl transition-colors flex items-center justify-center gap-2 hover:scale-102 cursor-pointer min-h-[44px]"
               >
                 <MapPin className="w-4 h-4 text-amber-400" />
                 <span>Directions</span>
@@ -146,24 +146,24 @@ export const Hero: React.FC = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.8, delay: 0.6 }}
-              className="grid grid-cols-2 sm:grid-cols-3 gap-4 pt-6 border-t border-amber-900/30 text-xs"
+              className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4 pt-5 border-t border-amber-900/30 text-xs"
             >
-              <div className="p-3 rounded-lg bg-[#140f0c] border border-amber-900/20 hover:border-amber-500/30 transition-colors">
-                <div className="text-stone-400 text-[11px] uppercase tracking-wider">Timings</div>
-                <div className="font-semibold text-stone-100 mt-0.5">{RESTAURANT_INFO.hours}</div>
-                <div className="text-amber-400/80 text-[11px]">Open All 7 Days</div>
+              <div className="p-3 rounded-xl bg-[#140f0c] border border-amber-900/20 hover:border-amber-500/30 transition-colors">
+                <div className="text-stone-400 text-[10px] sm:text-[11px] uppercase tracking-wider">Timings</div>
+                <div className="font-semibold text-stone-100 text-xs sm:text-sm mt-0.5">{RESTAURANT_INFO.hours}</div>
+                <div className="text-amber-400/80 text-[10px] sm:text-[11px]">Open All 7 Days</div>
               </div>
 
-              <div className="p-3 rounded-lg bg-[#140f0c] border border-amber-900/20 hover:border-amber-500/30 transition-colors">
-                <div className="text-stone-400 text-[11px] uppercase tracking-wider">Average Meal</div>
-                <div className="font-semibold text-stone-100 mt-0.5 tabular-nums">{RESTAURANT_INFO.avgCostForTwo}</div>
-                <div className="text-stone-400 text-[11px]">For Two Persons</div>
+              <div className="p-3 rounded-xl bg-[#140f0c] border border-amber-900/20 hover:border-amber-500/30 transition-colors">
+                <div className="text-stone-400 text-[10px] sm:text-[11px] uppercase tracking-wider">Average Meal</div>
+                <div className="font-semibold text-stone-100 text-xs sm:text-sm mt-0.5 tabular-nums">{RESTAURANT_INFO.avgCostForTwo}</div>
+                <div className="text-stone-400 text-[10px] sm:text-[11px]">For Two Persons</div>
               </div>
 
-              <div className="col-span-2 sm:col-span-1 p-3 rounded-lg bg-[#140f0c] border border-amber-900/20 hover:border-amber-500/30 transition-colors">
-                <div className="text-stone-400 text-[11px] uppercase tracking-wider">Highway Comfort</div>
-                <div className="font-semibold text-stone-100 mt-0.5">AC Hall + Open Garden</div>
-                <div className="text-emerald-400 text-[11px]">Free Parking & Wheelchair Ramp</div>
+              <div className="col-span-2 sm:col-span-1 p-3 rounded-xl bg-[#140f0c] border border-amber-900/20 hover:border-amber-500/30 transition-colors">
+                <div className="text-stone-400 text-[10px] sm:text-[11px] uppercase tracking-wider">Highway Comfort</div>
+                <div className="font-semibold text-stone-100 text-xs sm:text-sm mt-0.5">AC Hall + Open Garden</div>
+                <div className="text-emerald-400 text-[10px] sm:text-[11px]">Free Parking & Wheelchair Ramp</div>
               </div>
             </motion.div>
           </motion.div>
@@ -181,7 +181,7 @@ export const Hero: React.FC = () => {
 
               <div className="relative rounded-2xl overflow-hidden border border-amber-500/30 bg-[#140f0c] shadow-2xl transition-transform duration-500 group-hover:-translate-y-1">
                 {/* Genuine Appetizing Dish Photography */}
-                <div className="relative h-72 sm:h-80 overflow-hidden">
+                <div className="relative h-60 sm:h-80 overflow-hidden">
                   <img
                     src={signatureDish.imageUrl}
                     alt={signatureDish.name}
@@ -190,40 +190,40 @@ export const Hero: React.FC = () => {
                   <div className="absolute inset-0 bg-gradient-to-t from-[#140f0c] via-black/30 to-transparent" />
 
                   {/* Badges on Image */}
-                  <div className="absolute top-4 left-4 flex flex-col gap-2">
-                    <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-amber-500 text-stone-950 font-bold text-xs uppercase tracking-wider rounded-md shadow-md">
+                  <div className="absolute top-3 left-3 sm:top-4 sm:left-4 flex flex-col gap-2">
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-amber-500 text-stone-950 font-bold text-[10px] sm:text-xs uppercase tracking-wider rounded-md shadow-md">
                       <Flame className="w-3.5 h-3.5" />
                       Chef's Signature Dish
                     </span>
                   </div>
 
-                  <div className="absolute bottom-4 left-4 right-4 flex items-end justify-between">
+                  <div className="absolute bottom-3 left-3 right-3 sm:bottom-4 sm:left-4 sm:right-4 flex items-end justify-between">
                     <div>
-                      <span className="text-[11px] font-semibold uppercase tracking-widest text-amber-400 block mb-0.5">
+                      <span className="text-[10px] font-semibold uppercase tracking-widest text-amber-400 block mb-0.5">
                         CLAY HANDI · PURE DESI GHEE
                       </span>
-                      <h3 className="font-serif text-xl sm:text-2xl font-bold text-white leading-tight drop-shadow-md">
+                      <h3 className="font-serif text-lg sm:text-2xl font-bold text-white leading-tight drop-shadow-md">
                         {signatureDish.name}
                       </h3>
                     </div>
-                    <div className="font-serif text-2xl font-bold text-amber-300 tabular-nums drop-shadow-md">
+                    <div className="font-serif text-xl sm:text-2xl font-bold text-amber-300 tabular-nums drop-shadow-md">
                       ₹{signatureDish.price}
                     </div>
                   </div>
                 </div>
 
                 {/* Card Description & Details */}
-                <div className="p-5 space-y-4 bg-[#140f0c] border-t border-amber-900/30">
+                <div className="p-4 sm:p-5 space-y-3 sm:space-y-4 bg-[#140f0c] border-t border-amber-900/30">
                   <p className="text-stone-300 text-xs sm:text-sm leading-relaxed font-light">
                     {signatureDish.description}
                   </p>
 
-                  <div className="flex items-center justify-between pt-2 border-t border-amber-900/20 text-xs text-stone-400">
-                    <span className="flex items-center gap-1.5 text-emerald-400">
-                      <ShieldCheck className="w-4 h-4" />
-                      100% Pure Desi Ghee
+                  <div className="flex items-center justify-between pt-2 border-t border-amber-900/20 text-[11px] sm:text-xs text-stone-400">
+                    <span className="flex items-center gap-1.5 text-emerald-400 font-medium">
+                      <ShieldCheck className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                      100% Desi Ghee
                     </span>
-                    <span>Prep Time: ~15 mins</span>
+                    <span>Prep: ~15 mins</span>
                     <a
                       href="#menu"
                       className="text-amber-400 hover:text-amber-300 font-semibold flex items-center gap-1 cursor-pointer"

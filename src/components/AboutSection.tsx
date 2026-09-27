@@ -30,9 +30,9 @@ export const AboutSection: React.FC = () => {
   const maharajaThali = MENU_ITEMS.find((m) => m.id === 'dish-8') || MENU_ITEMS[7];
 
   return (
-    <section id="about" className="py-20 lg:py-28 bg-[#100d0a] text-stone-200 border-b border-amber-900/30 relative overflow-hidden">
+    <section id="about" className="py-16 sm:py-20 lg:py-28 bg-[#100d0a] text-stone-200 border-b border-amber-900/30 relative overflow-hidden">
       {/* Subtle decorative background pattern */}
-      <div className="absolute top-0 right-0 w-96 h-96 bg-amber-600/5 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-0 right-0 w-80 sm:w-96 h-80 sm:h-96 bg-amber-600/5 rounded-full blur-3xl pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 relative">
         {/* Section Header */}
@@ -41,24 +41,24 @@ export const AboutSection: React.FC = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.2 }}
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-          className="max-w-3xl mb-16"
+          className="max-w-3xl mb-10 sm:mb-16"
         >
-          <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-amber-400 mb-3">
+          <div className="inline-flex items-center gap-2 text-[11px] sm:text-xs font-semibold uppercase tracking-widest text-amber-400 mb-2.5 sm:mb-3">
             <span>Our Culinary Legacy · Robertsganj, Sonbhadra</span>
           </div>
-          <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight text-balance leading-tight">
+          <h2 className="font-serif text-2xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight text-balance leading-tight">
             Rooted in Authentic Flavors, Crafted with <span className="text-gold-gradient italic">Pure Desi Ghee</span>.
           </h2>
-          <p className="mt-4 text-stone-300 text-sm sm:text-base leading-relaxed font-light">
+          <p className="mt-3 sm:mt-4 text-stone-300 text-xs sm:text-base leading-relaxed font-light">
             Founded with a passion for authentic highway dhaba culinary heritage, <strong className="text-amber-300 font-medium">Keshari Dhaba</strong> has become a celebrated culinary haven for travelers traversing between Varanasi, Renukoot, and Singrauli, as well as local families in Sonbhadra. We never compromise on time-tested Indian methods: clay tandoors fired with wood and charcoal, aromatic handis slow-simmered for hours, and dairy procured fresh from regional farms.
           </p>
         </motion.div>
 
         {/* 2-Column Showcase */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-14 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-12 lg:gap-14 items-center">
           {/* Left: 4 Pillars of Excellence (7 cols) */}
-          <div className="lg:col-span-7 space-y-6">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+          <div className="lg:col-span-7 space-y-5 sm:space-y-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
               {PILLARS.map((pillar, idx) => {
                 const Icon = pillar.icon;
                 return (
@@ -73,12 +73,12 @@ export const AboutSection: React.FC = () => {
                       ease: [0.16, 1, 0.3, 1],
                     }}
                     whileHover={{ y: -4, borderColor: 'rgba(245, 158, 11, 0.45)' }}
-                    className="p-6 rounded-xl bg-[#16120e] border border-amber-900/30 hover:shadow-xl hover:shadow-amber-950/40 transition-all duration-300 group cursor-default"
+                    className="p-5 sm:p-6 rounded-xl bg-[#16120e] border border-amber-900/30 hover:shadow-xl hover:shadow-amber-950/40 transition-all duration-300 group cursor-default"
                   >
-                    <div className="w-10 h-10 rounded-lg bg-amber-950/80 border border-amber-500/30 flex items-center justify-center text-amber-400 mb-4 group-hover:scale-110 transition-transform">
+                    <div className="w-10 h-10 rounded-lg bg-amber-950/80 border border-amber-500/30 flex items-center justify-center text-amber-400 mb-3.5 sm:mb-4 group-hover:scale-110 transition-transform">
                       <Icon className="w-5 h-5" />
                     </div>
-                    <h3 className="font-serif text-lg font-bold text-stone-100 group-hover:text-amber-200 transition-colors">
+                    <h3 className="font-serif text-base sm:text-lg font-bold text-stone-100 group-hover:text-amber-200 transition-colors">
                       {pillar.title}
                     </h3>
                     <p className="mt-2 text-stone-400 text-xs sm:text-sm leading-relaxed font-light">
@@ -89,28 +89,28 @@ export const AboutSection: React.FC = () => {
               })}
             </div>
 
-            {/* Cultural Hospitality Quote Bar */}
+            {/* Cultural Hospitality Quote Bar - Mobile Adaptive */}
             <motion.div
               initial={{ opacity: 0, scale: 0.98 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true, amount: 0.2 }}
               transition={{ duration: 0.6, delay: 0.4 }}
-              className="p-5 rounded-xl bg-gradient-to-r from-amber-950/90 to-[#1c140d] border border-amber-500/30 flex items-center justify-between gap-4 shadow-xl"
+              className="p-4 sm:p-5 rounded-xl bg-gradient-to-r from-amber-950/90 to-[#1c140d] border border-amber-500/30 flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 shadow-xl"
             >
-              <div className="flex items-center gap-4">
-                <span className="text-3xl">🪔</span>
+              <div className="flex items-start sm:items-center gap-3 sm:gap-4">
+                <span className="text-2xl sm:text-3xl shrink-0 mt-0.5 sm:mt-0">🪔</span>
                 <div>
-                  <div className="font-serif text-base sm:text-lg font-bold text-amber-200">
+                  <div className="font-serif text-sm sm:text-lg font-bold text-amber-200">
                     "अतिथि देवो भव:" — True Sonbhadra Hospitality
                   </div>
-                  <div className="text-xs text-amber-300/80 font-light mt-0.5">
+                  <div className="text-[11px] sm:text-xs text-amber-300/80 font-light mt-0.5">
                     Proudly welcoming travelers visiting Salkhan Fossil Park, Vijaygarh Fort, and Varanasi road.
                   </div>
                 </div>
               </div>
               <a
                 href="#menu"
-                className="hidden sm:inline-flex px-4 py-2 bg-amber-500 hover:bg-amber-400 text-stone-950 text-xs font-semibold uppercase tracking-wider rounded-lg transition-colors whitespace-nowrap cursor-pointer hover:scale-102"
+                className="self-start sm:self-auto px-4 py-2 bg-amber-500 hover:bg-amber-400 text-stone-950 text-xs font-semibold uppercase tracking-wider rounded-lg transition-colors whitespace-nowrap cursor-pointer hover:scale-102 min-h-[38px] flex items-center"
               >
                 View Menu
               </a>
@@ -129,7 +129,7 @@ export const AboutSection: React.FC = () => {
               <div className="absolute -inset-1 bg-gradient-to-r from-amber-600/20 via-orange-600/20 to-amber-700/20 rounded-2xl blur-xl" />
 
               <div className="relative rounded-2xl overflow-hidden border border-amber-500/30 bg-[#16120e] shadow-2xl">
-                <div className="relative h-72 sm:h-80 overflow-hidden">
+                <div className="relative h-60 sm:h-80 overflow-hidden">
                   <img
                     src={maharajaThali.imageUrl}
                     alt={maharajaThali.name}
@@ -137,28 +137,28 @@ export const AboutSection: React.FC = () => {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#16120e] via-black/30 to-transparent" />
                   
-                  <div className="absolute top-4 left-4">
-                    <span className="px-3 py-1 bg-amber-500 text-stone-950 font-bold text-xs uppercase tracking-wider rounded-md shadow-md">
+                  <div className="absolute top-3 left-3 sm:top-4 sm:left-4">
+                    <span className="px-2.5 sm:px-3 py-1 bg-amber-500 text-stone-950 font-bold text-[10px] sm:text-xs uppercase tracking-wider rounded-md shadow-md">
                       Chef's Royal Assemblage
                     </span>
                   </div>
 
-                  <div className="absolute bottom-4 left-4 right-4 flex items-end justify-between">
+                  <div className="absolute bottom-3 left-3 right-3 sm:bottom-4 sm:left-4 sm:right-4 flex items-end justify-between">
                     <div>
-                      <span className="text-[10px] font-semibold uppercase tracking-widest text-amber-400">
+                      <span className="text-[9px] sm:text-[10px] font-semibold uppercase tracking-widest text-amber-400">
                         THE COMPLETE BANQUET FEAST
                       </span>
-                      <h3 className="font-serif text-2xl font-bold text-white drop-shadow-md">
+                      <h3 className="font-serif text-xl sm:text-2xl font-bold text-white drop-shadow-md">
                         {maharajaThali.name}
                       </h3>
                     </div>
-                    <div className="font-serif text-2xl font-bold text-amber-300 tabular-nums drop-shadow-md">
+                    <div className="font-serif text-xl sm:text-2xl font-bold text-amber-300 tabular-nums drop-shadow-md">
                       ₹{maharajaThali.price}
                     </div>
                   </div>
                 </div>
 
-                <div className="p-6 space-y-4">
+                <div className="p-5 sm:p-6 space-y-4">
                   <p className="text-stone-300 text-xs sm:text-sm leading-relaxed font-light">
                     {maharajaThali.description}
                   </p>
@@ -181,7 +181,7 @@ export const AboutSection: React.FC = () => {
                   <div className="pt-2">
                     <a
                       href="#booking"
-                      className="w-full py-3 bg-amber-500 hover:bg-amber-400 text-stone-950 font-bold text-xs uppercase tracking-wider rounded-lg transition-colors flex items-center justify-center gap-2 cursor-pointer shadow-md hover:scale-101"
+                      className="w-full py-3 bg-amber-500 hover:bg-amber-400 text-stone-950 font-bold text-xs uppercase tracking-wider rounded-xl transition-colors flex items-center justify-center gap-2 cursor-pointer shadow-md hover:scale-101 min-h-[44px]"
                     >
                       <span>Reserve Maharaja Thali Table</span>
                     </a>

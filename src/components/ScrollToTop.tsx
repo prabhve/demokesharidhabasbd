@@ -29,7 +29,7 @@ export const ScrollToTop: React.FC = () => {
   };
 
   // SVG progress circle math
-  const radius = 18;
+  const radius = 17;
   const circumference = 2 * Math.PI * radius;
   const strokeDashoffset = circumference - (scrollProgress / 100) * circumference;
 
@@ -41,14 +41,14 @@ export const ScrollToTop: React.FC = () => {
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.8, y: 20 }}
           transition={{ duration: 0.3, ease: 'easeOut' }}
-          className="fixed bottom-20 lg:bottom-8 right-5 z-40 flex flex-col items-center gap-2.5"
+          className="fixed bottom-18 sm:bottom-20 lg:bottom-8 right-3 sm:right-5 z-40 flex flex-col items-center gap-2"
         >
-          {/* Quick Floating Table Reservation Pill */}
+          {/* Quick Floating Table Reservation Shortcut (Desktop/Tablet) */}
           <motion.a
             href="#booking"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#18130e]/90 text-amber-300 border border-amber-500/40 backdrop-blur-md shadow-xl text-xs font-semibold uppercase tracking-wider hover:border-amber-400 hover:text-white transition-colors"
+            className="hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#18130e]/95 text-amber-300 border border-amber-500/40 backdrop-blur-md shadow-xl text-xs font-semibold uppercase tracking-wider hover:border-amber-400 hover:text-white transition-colors"
           >
             <UtensilsCrossed className="w-3.5 h-3.5 text-amber-400" />
             <span>Book Table</span>
@@ -58,7 +58,7 @@ export const ScrollToTop: React.FC = () => {
           <button
             onClick={scrollToTop}
             aria-label="Scroll back to top"
-            className="relative w-12 h-12 rounded-full bg-[#140f0c]/95 border border-amber-500/40 backdrop-blur-md shadow-2xl flex items-center justify-center text-amber-400 hover:text-white hover:border-amber-400 transition-colors group cursor-pointer"
+            className="relative w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-[#140f0c]/95 border border-amber-500/40 backdrop-blur-md shadow-2xl flex items-center justify-center text-amber-400 hover:text-white hover:border-amber-400 transition-colors group cursor-pointer touch-manipulation"
           >
             {/* Circular Progress SVG */}
             <svg className="absolute inset-0 w-full h-full -rotate-90" viewBox="0 0 44 44">

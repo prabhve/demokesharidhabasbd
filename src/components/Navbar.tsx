@@ -26,7 +26,7 @@ export const Navbar: React.FC<NavbarProps> = ({ orderCount = 0, onOpenOrderDrawe
   // Active section scrollspy
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 40);
+      setIsScrolled(window.scrollY > 30);
 
       const sectionElements = NAV_LINKS.map((link) => ({
         id: link.id,
@@ -47,7 +47,7 @@ export const Navbar: React.FC<NavbarProps> = ({ orderCount = 0, onOpenOrderDrawe
         }
       }
 
-      if (window.scrollY < 300) {
+      if (window.scrollY < 260) {
         setActiveSection('');
       }
     };
@@ -59,13 +59,15 @@ export const Navbar: React.FC<NavbarProps> = ({ orderCount = 0, onOpenOrderDrawe
 
   return (
     <>
-      {/* Top Luxury Announcement Ribbon */}
-      <div className="bg-[#120e0a] text-amber-200/90 text-[11px] sm:text-xs py-1.5 px-4 border-b border-amber-900/30">
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <div className="flex items-center gap-3 sm:gap-6">
-            <span className="flex items-center gap-1.5 text-stone-300">
-              <MapPin className="w-3.5 h-3.5 text-amber-500 shrink-0" />
-              <span className="truncate">Amarati, Robertsganj, Sonbhadra</span>
+      {/* Top Luxury Announcement Ribbon - Mobile Optimized */}
+      <div className="bg-[#120e0a] text-amber-200/90 text-[10px] sm:text-xs py-1.5 px-3 sm:px-4 border-b border-amber-900/30">
+        <div className="max-w-7xl mx-auto flex items-center justify-between gap-2">
+          <div className="flex items-center gap-2 sm:gap-6 min-w-0">
+            <span className="flex items-center gap-1 text-stone-300 min-w-0">
+              <MapPin className="w-3 h-3 text-amber-500 shrink-0" />
+              <span className="truncate max-w-[140px] xs:max-w-[190px] sm:max-w-none">
+                Amarati, Robertsganj, Sonbhadra
+              </span>
             </span>
             <span className="hidden md:inline-block text-amber-900">|</span>
             <span className="hidden md:flex items-center gap-1.5 text-stone-300">
@@ -74,13 +76,13 @@ export const Navbar: React.FC<NavbarProps> = ({ orderCount = 0, onOpenOrderDrawe
             </span>
           </div>
 
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2 sm:gap-4 shrink-0">
             <a
               href={`tel:${RESTAURANT_INFO.phonePrimary.replace(/\s+/g, '')}`}
-              className="flex items-center gap-1.5 text-amber-300 hover:text-amber-100 transition-colors"
+              className="flex items-center gap-1 text-amber-300 hover:text-amber-100 transition-colors"
             >
-              <Phone className="w-3 h-3 text-amber-400" />
-              <span className="font-mono text-[11px] font-semibold">{RESTAURANT_INFO.phonePrimary}</span>
+              <Phone className="w-3 h-3 text-amber-400 shrink-0" />
+              <span className="font-mono text-[10px] sm:text-[11px] font-semibold">{RESTAURANT_INFO.phonePrimary}</span>
             </a>
             <span className="text-amber-900/60 hidden sm:inline">|</span>
             <a
@@ -104,23 +106,23 @@ export const Navbar: React.FC<NavbarProps> = ({ orderCount = 0, onOpenOrderDrawe
             : 'border-amber-500/20 shadow-xl'
         }`}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 h-20 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 h-16 sm:h-20 flex items-center justify-between">
           {/* Brand Identity with Hindi Subscript */}
-          <a href="#" className="flex items-center gap-3 group">
-            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-amber-500 via-amber-700 to-amber-950 flex items-center justify-center border border-amber-400/40 shadow-md group-hover:border-amber-300 transition-colors">
-              <UtensilsCrossed className="w-5 h-5 text-amber-100" />
+          <a href="#" className="flex items-center gap-2.5 sm:gap-3 group min-w-0">
+            <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-gradient-to-br from-amber-500 via-amber-700 to-amber-950 flex items-center justify-center border border-amber-400/40 shadow-md group-hover:border-amber-300 transition-colors shrink-0">
+              <UtensilsCrossed className="w-4 h-4 sm:w-5 sm:h-5 text-amber-100" />
             </div>
-            <div>
-              <div className="font-serif text-2xl font-bold tracking-tight text-stone-100 leading-none group-hover:text-amber-300 transition-colors">
+            <div className="min-w-0">
+              <div className="font-serif text-lg sm:text-2xl font-bold tracking-tight text-stone-100 leading-none group-hover:text-amber-300 transition-colors truncate">
                 <span className="text-gold-gradient">Keshari</span> Dhaba
               </div>
-              <div className="text-[10px] text-amber-400/80 tracking-widest uppercase font-serif mt-1">
+              <div className="text-[9px] sm:text-[10px] text-amber-400/80 tracking-widest uppercase font-serif mt-0.5 sm:mt-1 truncate">
                 केशरी ढाबा · सोनभद्र
               </div>
             </div>
           </a>
 
-          {/* Navigation Links with Active Scrollspy Glow */}
+          {/* Navigation Links with Active Scrollspy Glow (Desktop) */}
           <nav className="hidden lg:flex items-center gap-6 xl:gap-8 text-xs font-semibold uppercase tracking-wider text-stone-300">
             {NAV_LINKS.map((link) => {
               const isActive = activeSection === link.id;
@@ -146,28 +148,28 @@ export const Navbar: React.FC<NavbarProps> = ({ orderCount = 0, onOpenOrderDrawe
           </nav>
 
           {/* Actions: Table Order Bill Tracker & Table Reservation */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3 shrink-0">
             {orderCount > 0 && onOpenOrderDrawer && (
               <button
                 onClick={onOpenOrderDrawer}
-                className="hidden sm:inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-amber-900 bg-amber-400 hover:bg-amber-300 rounded-lg transition-colors whitespace-nowrap shadow-md cursor-pointer animate-pulse"
+                className="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 sm:py-2 text-[11px] sm:text-xs font-semibold text-amber-900 bg-amber-400 hover:bg-amber-300 rounded-lg transition-colors whitespace-nowrap shadow-md cursor-pointer animate-pulse"
               >
-                <span>Table Order ({orderCount})</span>
+                <span>Bill ({orderCount})</span>
               </button>
             )}
 
             <a
               href="#booking"
-              className="px-4 py-2.5 text-xs font-semibold uppercase tracking-wider text-stone-950 bg-gradient-to-r from-amber-400 via-amber-500 to-amber-400 hover:from-amber-300 hover:to-amber-400 rounded-lg transition-all duration-300 whitespace-nowrap shadow-lg shadow-amber-950/50 border border-amber-300/40 hover:scale-102"
+              className="px-3 sm:px-4 py-2 sm:py-2.5 text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-stone-950 bg-gradient-to-r from-amber-400 via-amber-500 to-amber-400 hover:from-amber-300 hover:to-amber-400 rounded-lg transition-all duration-300 whitespace-nowrap shadow-lg shadow-amber-950/50 border border-amber-300/40 hover:scale-102"
             >
-              Reserve Table
+              Book Table
             </a>
 
-            {/* Mobile Toggle */}
+            {/* Mobile Menu Toggle Button */}
             <button
               type="button"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="lg:hidden p-2 text-stone-300 hover:text-white rounded-lg focus:outline-hidden"
+              className="lg:hidden p-2 text-stone-300 hover:text-white rounded-lg focus:outline-hidden min-w-[40px] min-h-[40px] flex items-center justify-center cursor-pointer"
               aria-label="Toggle navigation"
             >
               {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -183,43 +185,43 @@ export const Navbar: React.FC<NavbarProps> = ({ orderCount = 0, onOpenOrderDrawe
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.25 }}
-              className="lg:hidden bg-[#120e0a] border-b border-amber-900/40 px-5 py-5 space-y-4 overflow-hidden"
+              className="lg:hidden bg-[#120e0a] border-b border-amber-900/40 px-4 sm:px-5 py-4 sm:py-5 space-y-4 overflow-hidden max-h-[calc(100vh-5rem)] overflow-y-auto"
             >
-              <nav className="flex flex-col space-y-3 text-xs font-semibold uppercase tracking-wider text-stone-300">
+              <nav className="flex flex-col space-y-1.5 text-xs font-semibold uppercase tracking-wider text-stone-300">
                 {NAV_LINKS.map((link) => (
                   <a
                     key={link.id}
                     href={link.href}
                     onClick={() => setMobileMenuOpen(false)}
-                    className={`py-2 px-3 rounded-lg flex items-center justify-between transition-colors ${
+                    className={`py-3 px-3.5 rounded-xl flex items-center justify-between transition-colors min-h-[44px] ${
                       activeSection === link.id
                         ? 'bg-amber-500/20 text-amber-300 border border-amber-500/30'
-                        : 'hover:bg-[#1a140f] text-stone-300 hover:text-white'
+                        : 'hover:bg-[#1a140f] text-stone-300 hover:text-white active:bg-amber-500/10'
                     }`}
                   >
                     <span>{link.label}</span>
                     {activeSection === link.id && (
-                      <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
+                      <span className="w-2 h-2 rounded-full bg-amber-400" />
                     )}
                   </a>
                 ))}
               </nav>
 
-              <div className="pt-3 border-t border-amber-900/30 flex flex-col gap-2">
+              <div className="pt-3 border-t border-amber-900/30 flex flex-col gap-2.5">
                 <a
                   href={`tel:${RESTAURANT_INFO.phonePrimary.replace(/\s+/g, '')}`}
-                  className="w-full py-2.5 bg-[#1a140f] text-amber-300 text-xs font-semibold rounded-lg flex items-center justify-center gap-2 border border-amber-900/30"
+                  className="w-full py-3 bg-[#1a140f] text-amber-300 text-xs font-semibold rounded-xl flex items-center justify-center gap-2 border border-amber-900/30 min-h-[44px]"
                 >
-                  <Phone className="w-3.5 h-3.5" />
+                  <Phone className="w-4 h-4" />
                   <span>Call {RESTAURANT_INFO.phonePrimary}</span>
                 </a>
                 <a
                   href={RESTAURANT_INFO.socialLinks.whatsapp}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold rounded-lg flex items-center justify-center gap-2 shadow-md"
+                  className="w-full py-3 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold rounded-xl flex items-center justify-center gap-2 shadow-md min-h-[44px]"
                 >
-                  <MessageCircle className="w-3.5 h-3.5" />
+                  <MessageCircle className="w-4 h-4" />
                   <span>Direct WhatsApp Booking</span>
                 </a>
               </div>

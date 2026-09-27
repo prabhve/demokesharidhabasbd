@@ -9,10 +9,17 @@
   --color-gold-600: #d97706;
 }
 
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
 body {
   font-family: var(--font-sans);
   background-color: #0c0a09;
   color: #f5f5f4;
+  -webkit-tap-highlight-color: transparent;
+  overflow-x: hidden;
 }
 
 h1, h2, h3, .font-serif {
@@ -30,10 +37,15 @@ h1, h2, h3, .font-serif {
   -webkit-text-fill-color: transparent;
 }
 
+/* Touch manipulation utility to eliminate 300ms mobile tap delay */
+button, a, input, select, textarea {
+  touch-action: manipulation;
+}
+
 /* Smooth luxury scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
 }
 ::-webkit-scrollbar-track {
   background: #140f0c;
