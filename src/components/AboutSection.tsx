@@ -1,7 +1,6 @@
 import React from 'react';
 import { Flame, Sparkles, HeartHandshake, ShieldCheck, CheckCircle2 } from 'lucide-react';
-import { motion } from 'motion/react';
-import { RESTAURANT_INFO, MENU_ITEMS } from '../data/restaurantData';
+import { useAdminData } from '../context/AdminDataContext';
 
 const PILLARS = [
   {
@@ -27,7 +26,8 @@ const PILLARS = [
 ];
 
 export const AboutSection: React.FC = () => {
-  const maharajaThali = MENU_ITEMS.find((m) => m.id === 'dish-8') || MENU_ITEMS[7];
+  const { menuItems, restaurantInfo } = useAdminData();
+  const maharajaThali = menuItems.find((m) => m.id === 'dish-8') || menuItems[7] || menuItems[0];
 
   return (
     <section id="about" className="py-16 sm:py-20 lg:py-28 bg-[#100d0a] text-stone-200 border-b border-amber-900/30 relative overflow-hidden">
@@ -36,13 +36,7 @@ export const AboutSection: React.FC = () => {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 relative">
         {/* Section Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 25 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-          className="max-w-3xl mb-10 sm:mb-16"
-        >
+        <div className="max-w-3xl mb-10 sm:mb-16">
           <div className="inline-flex items-center gap-2 text-[11px] sm:text-xs font-semibold uppercase tracking-widest text-amber-400 mb-2.5 sm:mb-3">
             <span>Our Culinary Legacy · Robertsganj, Sonbhadra</span>
           </div>
@@ -50,53 +44,38 @@ export const AboutSection: React.FC = () => {
             Rooted in Authentic Flavors, Crafted with <span className="text-gold-gradient italic">Pure Desi Ghee</span>.
           </h2>
           <p className="mt-3 sm:mt-4 text-stone-300 text-xs sm:text-base leading-relaxed font-light">
-            Founded with a passion for authentic highway dhaba culinary heritage, <strong className="text-amber-300 font-medium">Keshari Dhaba</strong> has become a celebrated culinary haven for travelers traversing between Varanasi, Renukoot, and Singrauli, as well as local families in Sonbhadra. We never compromise on time-tested Indian methods: clay tandoors fired with wood and charcoal, aromatic handis slow-simmered for hours, and dairy procured fresh from regional farms.
+            Founded with a passion for authentic highway dhaba culinary heritage, <strong className="text-amber-300 font-medium">{restaurantInfo.name}</strong> has become a celebrated culinary haven for travelers traversing between Varanasi, Renukoot, and Singrauli, as well as local families in Sonbhadra. We never compromise on time-tested Indian methods: clay tandoors fired with wood and charcoal, aromatic handis slow-simmered for hours, and dairy procured fresh from regional farms.
           </p>
-        </motion.div>
+        </div>
 
         {/* 2-Column Showcase */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-12 lg:gap-14 items-center">
           {/* Left: 4 Pillars of Excellence (7 cols) */}
           <div className="lg:col-span-7 space-y-5 sm:space-y-6">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
-              {PILLARS.map((pillar, idx) => {
+              {PILLARS.map((pillar) => {
                 const Icon = pillar.icon;
                 return (
-                  <motion.div
+                  <div
                     key={pillar.title}
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, amount: 0.2 }}
-                    transition={{
-                      duration: 0.65,
-                      delay: idx * 0.12,
-                      ease: [0.16, 1, 0.3, 1],
-                    }}
-                    whileHover={{ y: -4, borderColor: 'rgba(245, 158, 11, 0.45)' }}
-                    className="p-5 sm:p-6 rounded-xl bg-[#16120e] border border-amber-900/30 hover:shadow-xl hover:shadow-amber-950/40 transition-all duration-300 group cursor-default"
+                    className="p-5 sm:p-6 rounded-xl bg-[#16120e] border border-amber-900/30 cursor-default"
                   >
-                    <div className="w-10 h-10 rounded-lg bg-amber-950/80 border border-amber-500/30 flex items-center justify-center text-amber-400 mb-3.5 sm:mb-4 group-hover:scale-110 transition-transform">
+                    <div className="w-10 h-10 rounded-lg bg-amber-950/80 border border-amber-500/30 flex items-center justify-center text-amber-400 mb-3.5 sm:mb-4">
                       <Icon className="w-5 h-5" />
                     </div>
-                    <h3 className="font-serif text-base sm:text-lg font-bold text-stone-100 group-hover:text-amber-200 transition-colors">
+                    <h3 className="font-serif text-base sm:text-lg font-bold text-stone-100">
                       {pillar.title}
                     </h3>
                     <p className="mt-2 text-stone-400 text-xs sm:text-sm leading-relaxed font-light">
                       {pillar.description}
                     </p>
-                  </motion.div>
+                  </div>
                 );
               })}
             </div>
 
-            {/* Cultural Hospitality Quote Bar - Mobile Adaptive */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.98 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true, amount: 0.2 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-              className="p-4 sm:p-5 rounded-xl bg-gradient-to-r from-amber-950/90 to-[#1c140d] border border-amber-500/30 flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 shadow-xl"
-            >
+            {/* Cultural Hospitality Quote Bar */}
+            <div className="p-4 sm:p-5 rounded-xl bg-gradient-to-r from-amber-950/90 to-[#1c140d] border border-amber-500/30 flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 shadow-xl">
               <div className="flex items-start sm:items-center gap-3 sm:gap-4">
                 <span className="text-2xl sm:text-3xl shrink-0 mt-0.5 sm:mt-0">🪔</span>
                 <div>
@@ -110,22 +89,16 @@ export const AboutSection: React.FC = () => {
               </div>
               <a
                 href="#menu"
-                className="self-start sm:self-auto px-4 py-2 bg-amber-500 hover:bg-amber-400 text-stone-950 text-xs font-semibold uppercase tracking-wider rounded-lg transition-colors whitespace-nowrap cursor-pointer hover:scale-102 min-h-[38px] flex items-center"
+                className="self-start sm:self-auto px-4 py-2 bg-amber-500 hover:bg-amber-400 text-stone-950 text-xs font-semibold uppercase tracking-wider rounded-lg whitespace-nowrap cursor-pointer min-h-[38px] flex items-center"
               >
                 View Menu
               </a>
-            </motion.div>
+            </div>
           </div>
 
           {/* Right: Royal Maharaja Thali Feature (5 cols) */}
-          <motion.div
-            initial={{ opacity: 0, x: 30, scale: 0.96 }}
-            whileInView={{ opacity: 1, x: 0, scale: 1 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.75, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
-            className="lg:col-span-5"
-          >
-            <div className="relative group">
+          <div className="lg:col-span-5">
+            <div className="relative">
               <div className="absolute -inset-1 bg-gradient-to-r from-amber-600/20 via-orange-600/20 to-amber-700/20 rounded-2xl blur-xl" />
 
               <div className="relative rounded-2xl overflow-hidden border border-amber-500/30 bg-[#16120e] shadow-2xl">
@@ -133,7 +106,7 @@ export const AboutSection: React.FC = () => {
                   <img
                     src={maharajaThali.imageUrl}
                     alt={maharajaThali.name}
-                    className="w-full h-full object-cover object-center transform transition-transform duration-700 group-hover:scale-108"
+                    className="w-full h-full object-cover object-center"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#16120e] via-black/30 to-transparent" />
                   
@@ -181,7 +154,7 @@ export const AboutSection: React.FC = () => {
                   <div className="pt-2">
                     <a
                       href="#booking"
-                      className="w-full py-3 bg-amber-500 hover:bg-amber-400 text-stone-950 font-bold text-xs uppercase tracking-wider rounded-xl transition-colors flex items-center justify-center gap-2 cursor-pointer shadow-md hover:scale-101 min-h-[44px]"
+                      className="w-full py-3 bg-amber-500 hover:bg-amber-400 text-stone-950 font-bold text-xs uppercase tracking-wider rounded-xl flex items-center justify-center gap-2 cursor-pointer shadow-md min-h-[44px]"
                     >
                       <span>Reserve Maharaja Thali Table</span>
                     </a>
@@ -189,7 +162,7 @@ export const AboutSection: React.FC = () => {
                 </div>
               </div>
             </div>
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>

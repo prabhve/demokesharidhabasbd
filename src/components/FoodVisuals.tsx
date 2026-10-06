@@ -42,10 +42,10 @@ export const FoodVisual: React.FC<FoodVisualProps> = ({ type, className = 'w-ful
 
   return (
     <div className={`relative overflow-hidden bg-stone-950 group ${className}`}>
-      {/* Background ambient shimmer while image loads */}
+      {/* Background ambient container while image loads */}
       <div
-        className={`absolute inset-0 bg-stone-900 transition-opacity duration-700 ${
-          loaded ? 'opacity-0 pointer-events-none' : 'opacity-100 animate-pulse'
+        className={`absolute inset-0 bg-stone-900 ${
+          loaded ? 'opacity-0 pointer-events-none' : 'opacity-100'
         }`}
       />
 
@@ -55,7 +55,7 @@ export const FoodVisual: React.FC<FoodVisualProps> = ({ type, className = 'w-ful
         loading="lazy"
         onLoad={() => setLoaded(true)}
         onError={() => setError(true)}
-        className={`w-full h-full object-cover object-center transform transition-all duration-700 ease-out group-hover:scale-105 ${
+        className={`w-full h-full object-cover object-center ${
           loaded ? 'opacity-100' : 'opacity-0'
         }`}
       />
@@ -64,7 +64,7 @@ export const FoodVisual: React.FC<FoodVisualProps> = ({ type, className = 'w-ful
       <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent pointer-events-none" />
 
       {/* Subtle gold border accent glow */}
-      <div className="absolute inset-0 border border-amber-500/10 pointer-events-none group-hover:border-amber-500/30 transition-colors" />
+      <div className="absolute inset-0 border border-amber-500/10 pointer-events-none" />
     </div>
   );
 };
@@ -81,8 +81,8 @@ export const TouristVisual: React.FC<{ placeId: string; className?: string; altT
   return (
     <div className={`relative overflow-hidden bg-stone-950 group ${className}`}>
       <div
-        className={`absolute inset-0 bg-stone-900 transition-opacity duration-700 ${
-          loaded ? 'opacity-0 pointer-events-none' : 'opacity-100 animate-pulse'
+        className={`absolute inset-0 bg-stone-900 ${
+          loaded ? 'opacity-0 pointer-events-none' : 'opacity-100'
         }`}
       />
 
@@ -91,13 +91,13 @@ export const TouristVisual: React.FC<{ placeId: string; className?: string; altT
         alt={altText || place?.name || 'Sonbhadra Attraction'}
         loading="lazy"
         onLoad={() => setLoaded(true)}
-        className={`w-full h-full object-cover object-center transform transition-all duration-700 ease-out group-hover:scale-105 ${
+        className={`w-full h-full object-cover object-center ${
           loaded ? 'opacity-100' : 'opacity-0'
         }`}
       />
 
       <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-black/10 pointer-events-none" />
-      <div className="absolute inset-0 border border-amber-500/10 pointer-events-none group-hover:border-amber-500/30 transition-colors" />
+      <div className="absolute inset-0 border border-amber-500/10 pointer-events-none" />
     </div>
   );
 };

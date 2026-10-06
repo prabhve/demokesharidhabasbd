@@ -1,8 +1,14 @@
 import React from 'react';
-import { MapPin, Phone, MessageCircle, Heart, UtensilsCrossed } from 'lucide-react';
-import { RESTAURANT_INFO } from '../data/restaurantData';
+import { MapPin, Phone, MessageCircle, Heart, UtensilsCrossed, ShieldAlert, Lock } from 'lucide-react';
+import { useAdminData } from '../context/AdminDataContext';
 
-export const Footer: React.FC = () => {
+interface FooterProps {
+  onOpenAdmin?: () => void;
+}
+
+export const Footer: React.FC<FooterProps> = ({ onOpenAdmin }) => {
+  const { restaurantInfo } = useAdminData();
+
   return (
     <footer className="bg-[#080605] text-stone-400 text-xs border-t border-amber-900/30">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-12 sm:pt-14 pb-28 sm:pb-24 lg:pb-16">
@@ -19,12 +25,25 @@ export const Footer: React.FC = () => {
             </div>
 
             <div className="text-amber-400/90 font-serif text-xs tracking-wider">
-              केशरी ढाबा एवं फैमिली रेस्टोरेंट · सोनभद्र
+              {restaurantInfo.hindiName || 'केशरी ढाबा एवं फैमिली रेस्टोरेंट · सोनभद्र'}
             </div>
 
             <p className="text-stone-400 text-xs leading-relaxed font-light">
-              Celebrating genuine North Indian culinary traditions prepared in pure Desi Ghee in Amarati, Robertsganj. Air-conditioned family banquet hall, outdoor garden dining, and express parcel services for highway commuters.
+              Celebrating genuine North Indian culinary traditions prepared in pure Desi Ghee in Amarati, Robertsganj. Air-conditioned family banquet hall, outdoor garden dining, and express parcel services for highway commuters and REC Sonbhadra students.
             </p>
+
+            {/* Direct Admin Access Button in Footer Col 1 */}
+            {onOpenAdmin && (
+              <div className="pt-1">
+                <button
+                  onClick={onOpenAdmin}
+                  className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-[#140f0c] hover:bg-[#1f1712] border border-amber-900/40 hover:border-amber-500/40 text-amber-300 text-[11px] font-semibold cursor-pointer shadow-sm"
+                >
+                  <ShieldAlert className="w-3.5 h-3.5 text-amber-400" />
+                  <span>Admin & CMS Console</span>
+                </button>
+              </div>
+            )}
           </div>
 
           {/* Col 2: Navigation Links */}
@@ -54,6 +73,17 @@ export const Footer: React.FC = () => {
               <li>
                 <a href="#contact" className="hover:text-amber-300 transition-colors py-1 inline-block">Location Map & Contacts</a>
               </li>
+              {onOpenAdmin && (
+                <li>
+                  <button
+                    onClick={onOpenAdmin}
+                    className="text-amber-400/90 hover:text-amber-300 font-semibold py-1 inline-flex items-center gap-1 cursor-pointer"
+                  >
+                    <Lock className="w-3 h-3 text-amber-400" />
+                    <span>Staff Admin Login</span>
+                  </button>
+                </li>
+              )}
             </ul>
           </div>
 
@@ -104,12 +134,15 @@ export const Footer: React.FC = () => {
             <div className="space-y-2 text-xs text-stone-300 font-light">
               <div className="flex items-start gap-2">
                 <MapPin className="w-4 h-4 text-amber-500 shrink-0 mt-0.5" />
-                <span>Amarati, In Front of DIET Office, Urmaura, Robertsganj, Sonbhadra, UP - 231216</span>
+                <span>{restaurantInfo.address}, {restaurantInfo.city}, UP - {restaurantInfo.pincode}</span>
               </div>
               <div className="flex items-center gap-2 pt-1">
                 <Phone className="w-4 h-4 text-amber-500 shrink-0" />
-                <a href={`tel:${RESTAURANT_INFO.phonePrimary.replace(/\s+/g, '')}`} className="font-mono text-white font-semibold hover:text-amber-300">
-                  {RESTAURANT_INFO.phonePrimary}
+                <a
+                  href={`tel:${restaurantInfo.phonePrimary.replace(/\s+/g, '')}`}
+                  className="font-mono text-white font-semibold hover:text-amber-300"
+                >
+                  {restaurantInfo.phonePrimary}
                 </a>
               </div>
               <div className="flex items-center gap-2">
@@ -117,17 +150,31 @@ export const Footer: React.FC = () => {
                 <span className="text-emerald-400 font-medium">WhatsApp Booking Active</span>
               </div>
               <div className="pt-1 text-stone-400">
-                Operating Hours: <strong className="text-amber-300">{RESTAURANT_INFO.hours}</strong> (Open All 7 Days)
+                Operating Hours: <strong className="text-amber-300">{restaurantInfo.hours}</strong> ({restaurantInfo.days})
               </div>
             </div>
           </div>
         </div>
 
-        {/* Bottom Bar */}
-        <div className="mt-10 sm:mt-14 pt-6 border-t border-amber-900/30 flex flex-col sm:flex-row items-center justify-between gap-3 text-[11px] text-stone-500 text-center sm:text-left">
+        {/* Bottom Bar with 100-Layer Protected Admin Portal Entry */}
+        <div className="mt-10 sm:mt-14 pt-6 border-t border-amber-900/30 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-stone-500 text-center sm:text-left">
           <div>
             © {new Date().getFullYear()} Keshari Dhaba & Family Restaurant. All rights reserved.
           </div>
+
+          {/* Discreet Secure Admin Portal Button */}
+          {onOpenAdmin && (
+            <div>
+              <button
+                onClick={onOpenAdmin}
+                className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#15100c] hover:bg-[#201812] text-amber-400/90 hover:text-amber-300 border border-amber-900/40 hover:border-amber-500/40 text-[11px] font-semibold cursor-pointer transition-colors shadow-sm"
+              >
+                <ShieldAlert className="w-3.5 h-3.5 text-amber-400" />
+                <span>Owner & Staff Admin Portal (100-Layer Passcode)</span>
+              </button>
+            </div>
+          )}
+
           <div className="flex items-center gap-1.5 text-stone-400">
             <span>Crafted with</span>
             <Heart className="w-3.5 h-3.5 text-red-500 fill-red-500" />

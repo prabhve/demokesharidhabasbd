@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Phone, MessageCircle, Menu, X, MapPin, Clock, UtensilsCrossed } from 'lucide-react';
-import { motion, AnimatePresence } from 'motion/react';
-import { RESTAURANT_INFO } from '../data/restaurantData';
+import { Phone, MessageCircle, Menu, X, MapPin, Clock, UtensilsCrossed, GraduationCap, Sparkles } from 'lucide-react';
+import { useAdminData } from '../context/AdminDataContext';
 
 interface NavbarProps {
   orderCount?: number;
@@ -19,6 +18,7 @@ const NAV_LINKS = [
 ];
 
 export const Navbar: React.FC<NavbarProps> = ({ orderCount = 0, onOpenOrderDrawer }) => {
+  const { restaurantInfo, announcement } = useAdminData();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState<string>('');
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
@@ -59,6 +59,14 @@ export const Navbar: React.FC<NavbarProps> = ({ orderCount = 0, onOpenOrderDrawe
 
   return (
     <>
+      {/* Top Special Notice Bar if enabled by Admin */}
+      {announcement.enabled && announcement.text && (
+        <div className="bg-gradient-to-r from-amber-600 via-amber-500 to-amber-600 text-stone-950 text-[11px] sm:text-xs py-1.5 px-3 text-center font-bold tracking-wide flex items-center justify-center gap-2">
+          <Sparkles className="w-3.5 h-3.5 shrink-0" />
+          <span>{announcement.text}</span>
+        </div>
+      )}
+
       {/* Top Luxury Announcement Ribbon - Mobile Optimized */}
       <div className="bg-[#120e0a] text-amber-200/90 text-[10px] sm:text-xs py-1.5 px-3 sm:px-4 border-b border-amber-900/30">
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-2">
@@ -66,27 +74,27 @@ export const Navbar: React.FC<NavbarProps> = ({ orderCount = 0, onOpenOrderDrawe
             <span className="flex items-center gap-1 text-stone-300 min-w-0">
               <MapPin className="w-3 h-3 text-amber-500 shrink-0" />
               <span className="truncate max-w-[140px] xs:max-w-[190px] sm:max-w-none">
-                Amarati, Robertsganj, Sonbhadra
+                {restaurantInfo.address}
               </span>
             </span>
             <span className="hidden md:inline-block text-amber-900">|</span>
             <span className="hidden md:flex items-center gap-1.5 text-stone-300">
               <Clock className="w-3.5 h-3.5 text-amber-500 shrink-0" />
-              <span>Open Daily: {RESTAURANT_INFO.hours}</span>
+              <span>Open Daily: {restaurantInfo.hours}</span>
             </span>
           </div>
 
           <div className="flex items-center gap-2 sm:gap-4 shrink-0">
             <a
-              href={`tel:${RESTAURANT_INFO.phonePrimary.replace(/\s+/g, '')}`}
+              href={`tel:${restaurantInfo.phonePrimary.replace(/\s+/g, '')}`}
               className="flex items-center gap-1 text-amber-300 hover:text-amber-100 transition-colors"
             >
               <Phone className="w-3 h-3 text-amber-400 shrink-0" />
-              <span className="font-mono text-[10px] sm:text-[11px] font-semibold">{RESTAURANT_INFO.phonePrimary}</span>
+              <span className="font-mono text-[10px] sm:text-[11px] font-semibold">{restaurantInfo.phonePrimary}</span>
             </a>
             <span className="text-amber-900/60 hidden sm:inline">|</span>
             <a
-              href={RESTAURANT_INFO.socialLinks.whatsapp}
+              href={restaurantInfo.socialLinks.whatsapp}
               target="_blank"
               rel="noopener noreferrer"
               className="hidden sm:flex items-center gap-1 text-emerald-400 hover:text-emerald-300 transition-colors"
@@ -130,17 +138,13 @@ export const Navbar: React.FC<NavbarProps> = ({ orderCount = 0, onOpenOrderDrawe
                 <a
                   key={link.id}
                   href={link.href}
-                  className={`relative py-1 transition-colors duration-200 ${
+                  className={`relative py-1 ${
                     isActive ? 'text-amber-400 font-bold' : 'hover:text-amber-300 text-stone-300'
                   }`}
                 >
                   <span>{link.label}</span>
                   {isActive && (
-                    <motion.div
-                      layoutId="activeNavIndicator"
-                      className="absolute -bottom-1 left-0 right-0 h-[2px] bg-gradient-to-r from-amber-500 via-amber-300 to-yellow-200 rounded-full shadow-[0_0_8px_rgba(251,191,36,0.9)]"
-                      transition={{ type: 'spring', stiffness: 350, damping: 30 }}
-                    />
+                    <div className="absolute -bottom-1 left-0 right-0 h-[2px] bg-gradient-to-r from-amber-500 via-amber-300 to-yellow-200 rounded-full" />
                   )}
                 </a>
               );
@@ -149,10 +153,20 @@ export const Navbar: React.FC<NavbarProps> = ({ orderCount = 0, onOpenOrderDrawe
 
           {/* Actions: Table Order Bill Tracker & Table Reservation */}
           <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+            {onOpenOrderDrawer && (
+              <button
+                onClick={onOpenOrderDrawer}
+                className="hidden sm:inline-flex items-center gap-1.5 px-3 py-2 text-[11px] sm:text-xs font-semibold text-amber-300 bg-[#1e1712] hover:bg-[#2a2019] rounded-lg border border-amber-500/30 whitespace-nowrap cursor-pointer shadow-sm"
+              >
+                <GraduationCap className="w-3.5 h-3.5 text-amber-400" />
+                <span>REC Delivery</span>
+              </button>
+            )}
+
             {orderCount > 0 && onOpenOrderDrawer && (
               <button
                 onClick={onOpenOrderDrawer}
-                className="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 sm:py-2 text-[11px] sm:text-xs font-semibold text-amber-900 bg-amber-400 hover:bg-amber-300 rounded-lg transition-colors whitespace-nowrap shadow-md cursor-pointer animate-pulse"
+                className="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 sm:py-2 text-[11px] sm:text-xs font-semibold text-amber-900 bg-amber-400 hover:bg-amber-300 rounded-lg whitespace-nowrap shadow-md cursor-pointer"
               >
                 <span>Bill ({orderCount})</span>
               </button>
@@ -160,7 +174,7 @@ export const Navbar: React.FC<NavbarProps> = ({ orderCount = 0, onOpenOrderDrawe
 
             <a
               href="#booking"
-              className="px-3 sm:px-4 py-2 sm:py-2.5 text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-stone-950 bg-gradient-to-r from-amber-400 via-amber-500 to-amber-400 hover:from-amber-300 hover:to-amber-400 rounded-lg transition-all duration-300 whitespace-nowrap shadow-lg shadow-amber-950/50 border border-amber-300/40 hover:scale-102"
+              className="px-3 sm:px-4 py-2 sm:py-2.5 text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-stone-950 bg-gradient-to-r from-amber-400 via-amber-500 to-amber-400 hover:from-amber-300 hover:to-amber-400 rounded-lg whitespace-nowrap shadow-lg shadow-amber-950/50 border border-amber-300/40"
             >
               Book Table
             </a>
@@ -177,57 +191,61 @@ export const Navbar: React.FC<NavbarProps> = ({ orderCount = 0, onOpenOrderDrawe
           </div>
         </div>
 
-        {/* Mobile Navigation Drawer with animated items */}
-        <AnimatePresence>
-          {mobileMenuOpen && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.25 }}
-              className="lg:hidden bg-[#120e0a] border-b border-amber-900/40 px-4 sm:px-5 py-4 sm:py-5 space-y-4 overflow-hidden max-h-[calc(100vh-5rem)] overflow-y-auto"
-            >
-              <nav className="flex flex-col space-y-1.5 text-xs font-semibold uppercase tracking-wider text-stone-300">
-                {NAV_LINKS.map((link) => (
-                  <a
-                    key={link.id}
-                    href={link.href}
-                    onClick={() => setMobileMenuOpen(false)}
-                    className={`py-3 px-3.5 rounded-xl flex items-center justify-between transition-colors min-h-[44px] ${
-                      activeSection === link.id
-                        ? 'bg-amber-500/20 text-amber-300 border border-amber-500/30'
-                        : 'hover:bg-[#1a140f] text-stone-300 hover:text-white active:bg-amber-500/10'
-                    }`}
-                  >
-                    <span>{link.label}</span>
-                    {activeSection === link.id && (
-                      <span className="w-2 h-2 rounded-full bg-amber-400" />
-                    )}
-                  </a>
-                ))}
-              </nav>
+        {/* Mobile Navigation Drawer */}
+        {mobileMenuOpen && (
+          <div className="lg:hidden bg-[#120e0a] border-b border-amber-900/40 px-4 sm:px-5 py-4 sm:py-5 space-y-4 overflow-hidden max-h-[calc(100vh-5rem)] overflow-y-auto">
+            <nav className="flex flex-col space-y-1.5 text-xs font-semibold uppercase tracking-wider text-stone-300">
+              {NAV_LINKS.map((link) => (
+                <a
+                  key={link.id}
+                  href={link.href}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className={`py-3 px-3.5 rounded-xl flex items-center justify-between min-h-[44px] ${
+                    activeSection === link.id
+                      ? 'bg-amber-500/20 text-amber-300 border border-amber-500/30'
+                      : 'hover:bg-[#1a140f] text-stone-300 hover:text-white active:bg-amber-500/10'
+                  }`}
+                >
+                  <span>{link.label}</span>
+                  {activeSection === link.id && (
+                    <span className="w-2 h-2 rounded-full bg-amber-400" />
+                  )}
+                </a>
+              ))}
+            </nav>
 
-              <div className="pt-3 border-t border-amber-900/30 flex flex-col gap-2.5">
-                <a
-                  href={`tel:${RESTAURANT_INFO.phonePrimary.replace(/\s+/g, '')}`}
-                  className="w-full py-3 bg-[#1a140f] text-amber-300 text-xs font-semibold rounded-xl flex items-center justify-center gap-2 border border-amber-900/30 min-h-[44px]"
+            <div className="pt-3 border-t border-amber-900/30 flex flex-col gap-2.5">
+              {onOpenOrderDrawer && (
+                <button
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    onOpenOrderDrawer();
+                  }}
+                  className="w-full py-3 bg-[#1e1712] text-amber-300 text-xs font-semibold rounded-xl flex items-center justify-center gap-2 border border-amber-500/30 min-h-[44px] cursor-pointer"
                 >
-                  <Phone className="w-4 h-4" />
-                  <span>Call {RESTAURANT_INFO.phonePrimary}</span>
-                </a>
-                <a
-                  href={RESTAURANT_INFO.socialLinks.whatsapp}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-full py-3 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold rounded-xl flex items-center justify-center gap-2 shadow-md min-h-[44px]"
-                >
-                  <MessageCircle className="w-4 h-4" />
-                  <span>Direct WhatsApp Booking</span>
-                </a>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+                  <GraduationCap className="w-4 h-4 text-amber-400" />
+                  <span>REC Sonbhadra Hostel Delivery</span>
+                </button>
+              )}
+              <a
+                href={`tel:${restaurantInfo.phonePrimary.replace(/\s+/g, '')}`}
+                className="w-full py-3 bg-[#1a140f] text-amber-300 text-xs font-semibold rounded-xl flex items-center justify-center gap-2 border border-amber-900/30 min-h-[44px]"
+              >
+                <Phone className="w-4 h-4" />
+                <span>Call {restaurantInfo.phonePrimary}</span>
+              </a>
+              <a
+                href={restaurantInfo.socialLinks.whatsapp}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full py-3 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold rounded-xl flex items-center justify-center gap-2 shadow-md min-h-[44px]"
+              >
+                <MessageCircle className="w-4 h-4" />
+                <span>Direct WhatsApp Booking</span>
+              </a>
+            </div>
+          </div>
+        )}
       </header>
     </>
   );

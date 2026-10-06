@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { MessageCircle, Users, Clock, Phone, Copy, CheckCircle2, Calendar, Sparkles } from 'lucide-react';
-import { motion } from 'motion/react';
-import { RESTAURANT_INFO } from '../data/restaurantData';
+import { useAdminData } from '../context/AdminDataContext';
 
 export const TableBookingSection: React.FC = () => {
+  const { restaurantInfo, addTableBooking } = useAdminData();
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [guests, setGuests] = useState('4');
@@ -34,7 +34,7 @@ Please confirm table availability. Thank you!`;
   };
 
   const formattedMessage = generateWhatsAppMessage();
-  const whatsappUrl = `https://wa.me/${RESTAURANT_INFO.whatsappNumber}?text=${encodeURIComponent(formattedMessage)}`;
+  const whatsappUrl = `https://wa.me/${restaurantInfo.whatsappNumber}?text=${encodeURIComponent(formattedMessage)}`;
 
   const handleCopyMessage = () => {
     navigator.clipboard.writeText(formattedMessage);
@@ -44,6 +44,17 @@ Please confirm table availability. Thank you!`;
 
   const handleWhatsAppBooking = (e: React.FormEvent) => {
     e.preventDefault();
+    addTableBooking({
+      name: name.trim() || 'Guest',
+      phone: phone.trim(),
+      guests: parseInt(guests, 10) || 4,
+      date,
+      timeSlot,
+      diningArea,
+      occasion,
+      specialNotes: specialNotes.trim() || undefined,
+      timestamp: 'Just now',
+    });
     window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
   };
 
@@ -53,13 +64,7 @@ Please confirm table availability. Thank you!`;
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 relative">
         {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 25 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-          className="max-w-3xl mb-10 sm:mb-16"
-        >
+        <div className="max-w-3xl mb-10 sm:mb-16">
           <div className="inline-flex items-center gap-2 text-[11px] sm:text-xs font-semibold uppercase tracking-widest text-amber-400 mb-2">
             <span>Direct WhatsApp Confirmation · Instant Table Hold</span>
           </div>
@@ -69,16 +74,12 @@ Please confirm table availability. Thank you!`;
           <p className="mt-2.5 sm:mt-3 text-stone-300 text-xs sm:text-base leading-relaxed font-light">
             Fill out your dining details. Our system formats a polite WhatsApp reservation request ready to send directly to our restaurant manager for instant priority seating.
           </p>
-        </motion.div>
+        </div>
 
         {/* 2-Column Suite with Mobile Stacking */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-10 lg:gap-12 items-start">
           {/* Form (7 cols) */}
-          <motion.form
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, amount: 0.15 }}
-            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+          <form
             onSubmit={handleWhatsAppBooking}
             className="lg:col-span-7 bg-[#140f0c] p-5 sm:p-8 rounded-2xl border border-amber-500/30 shadow-2xl space-y-5 sm:space-y-6"
           >
@@ -236,27 +237,21 @@ Please confirm table availability. Thank you!`;
             <div className="text-[11px] text-stone-400 flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 pt-1">
               <span>* Zero reservation fee. Table held for 15 minutes.</span>
               <a
-                href={`tel:${RESTAURANT_INFO.phonePrimary.replace(/\s+/g, '')}`}
+                href={`tel:${restaurantInfo.phonePrimary.replace(/\s+/g, '')}`}
                 className="text-amber-400 hover:underline flex items-center gap-1 self-start sm:self-auto py-1"
               >
                 <Phone className="w-3 h-3" />
                 <span>Urgent? Call Manager Directly</span>
               </a>
             </div>
-          </motion.form>
+          </form>
 
           {/* Right: Live Reservation Pass Preview (5 cols) */}
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, amount: 0.15 }}
-            transition={{ duration: 0.7, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-            className="lg:col-span-5 space-y-4 sm:space-y-5"
-          >
+          <div className="lg:col-span-5 space-y-4 sm:space-y-5">
             <div className="bg-[#140f0c] rounded-2xl border border-amber-500/30 p-5 sm:p-6 overflow-hidden shadow-2xl">
               <div className="flex items-center justify-between pb-3 border-b border-amber-900/30 text-xs text-stone-400">
                 <span className="flex items-center gap-2 text-emerald-400 font-bold uppercase tracking-wider text-[11px] sm:text-xs">
-                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                  <span className="w-2 h-2 rounded-full bg-emerald-400" />
                   Live WhatsApp Message Preview
                 </span>
                 <span className="font-mono text-[11px] text-amber-400">Keshari Dhaba</span>
@@ -290,14 +285,14 @@ Please confirm table availability. Thank you!`;
                 <div className="text-[11px] text-stone-400 mt-0.5">Call directly to have your table set & ready</div>
               </div>
               <a
-                href={`tel:${RESTAURANT_INFO.phonePrimary.replace(/\s+/g, '')}`}
-                className="px-4 py-2.5 bg-amber-500 hover:bg-amber-400 text-stone-950 font-bold text-xs uppercase tracking-wider rounded-lg transition-colors flex items-center justify-center gap-1.5 shrink-0 shadow-md hover:scale-102 min-h-[40px]"
+                href={`tel:${restaurantInfo.phonePrimary.replace(/\s+/g, '')}`}
+                className="px-4 py-2.5 bg-amber-500 hover:bg-amber-400 text-stone-950 font-bold text-xs uppercase tracking-wider rounded-lg transition-colors flex items-center justify-center gap-1.5 shrink-0 shadow-md min-h-[40px]"
               >
                 <Phone className="w-3.5 h-3.5" />
                 <span>Call Now</span>
               </a>
             </div>
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>

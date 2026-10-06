@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { Phone, MessageCircle, Utensils } from 'lucide-react';
-import { RESTAURANT_INFO, MenuItem } from './data/restaurantData';
+import { Phone, MessageCircle, Utensils, ShieldAlert } from 'lucide-react';
+import { MenuItem } from './data/restaurantData';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { AboutSection } from './components/AboutSection';
@@ -11,14 +11,26 @@ import { TouristPlacesSection } from './components/TouristPlacesSection';
 import { TestimonialsSection } from './components/TestimonialsSection';
 import { ContactSection } from './components/ContactSection';
 import { Footer } from './components/Footer';
-import { OrderCalculatorDrawer } from './components/OrderCalculatorDrawer';
-import { AnimatedSection } from './components/AnimatedSection';
-import { ScrollProgressBar } from './components/ScrollProgressBar';
+import { OrderCalculatorDrawer, OrderType } from './components/OrderCalculatorDrawer';
 import { ScrollToTop } from './components/ScrollToTop';
+import { AdminDataProvider, useAdminData } from './context/AdminDataContext';
+import { AdminSecurityModal } from './components/admin/AdminSecurityModal';
+import { AdminPanelModal } from './components/admin/AdminPanelModal';
 
-export default function App() {
+function MainApp() {
+  const { restaurantInfo } = useAdminData();
   const [orderItems, setOrderItems] = useState<Record<string, number>>({});
   const [isOrderDrawerOpen, setIsOrderDrawerOpen] = useState(false);
+  const [drawerOrderType, setDrawerOrderType] = useState<OrderType>('Dine-in');
+
+  // Admin Security Modal & Fullscreen Admin Console
+  const [isSecurityModalOpen, setIsSecurityModalOpen] = useState(false);
+  const [isAdminPanelOpen, setIsAdminPanelOpen] = useState(false);
+
+  const handleOpenOrderDrawer = (type: OrderType = 'Dine-in') => {
+    setDrawerOrderType(type);
+    setIsOrderDrawerOpen(true);
+  };
 
   const handleAddItem = (item: MenuItem) => {
     setOrderItems((prev) => ({
@@ -51,65 +63,48 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-[#0c0907] text-stone-100 flex flex-col selection:bg-amber-500 selection:text-stone-950 font-sans antialiased overflow-x-hidden">
-      {/* Real-time Golden Luxury Scroll Progress Bar */}
-      <ScrollProgressBar />
-
-      {/* Top Bar Navigation with Active Scrollspy */}
+      {/* Top Bar Navigation */}
       <Navbar
         orderCount={totalItemCount}
-        onOpenOrderDrawer={() => setIsOrderDrawerOpen(true)}
+        onOpenOrderDrawer={() => handleOpenOrderDrawer('Dine-in')}
       />
 
-      {/* Main Content Sections with Scroll-In Animations */}
+      {/* Main Content Sections - Pure Static Rendering with Zero Animation Delays */}
       <main className="flex-1 pb-16 lg:pb-0">
-        {/* Home / Hero Section with Parallax Background */}
+        {/* Home / Hero Section */}
         <Hero />
 
         {/* About Us Section */}
-        <AnimatedSection direction="up" threshold={0.08}>
-          <AboutSection />
-        </AnimatedSection>
+        <AboutSection />
 
-        {/* Gallery Section - Full-Width Masonry Grid */}
-        <AnimatedSection direction="up" threshold={0.06}>
-          <GallerySection />
-        </AnimatedSection>
+        {/* Gallery Section */}
+        <GallerySection />
 
         {/* Food Menu & Dhaba Specialties */}
-        <AnimatedSection direction="up" threshold={0.06}>
-          <MenuSection
-            orderItems={orderItems}
-            onAddItem={handleAddItem}
-            onRemoveItem={handleRemoveItem}
-            onOpenOrderDrawer={() => setIsOrderDrawerOpen(true)}
-          />
-        </AnimatedSection>
+        <MenuSection
+          orderItems={orderItems}
+          onAddItem={handleAddItem}
+          onRemoveItem={handleRemoveItem}
+          onOpenOrderDrawer={(type) => handleOpenOrderDrawer(type || 'Dine-in')}
+        />
 
-        {/* Table Booking through WhatsApp Direct Message */}
-        <AnimatedSection direction="up" threshold={0.08}>
-          <TableBookingSection />
-        </AnimatedSection>
+        {/* Table Booking */}
+        <TableBookingSection />
 
         {/* Sonbhadra Famous Tourist Places with Navigation */}
-        <AnimatedSection direction="up" threshold={0.06}>
-          <TouristPlacesSection />
-        </AnimatedSection>
+        <TouristPlacesSection />
 
         {/* Testimonials & Verified Google Reviews */}
-        <AnimatedSection direction="up" threshold={0.08}>
-          <TestimonialsSection />
-        </AnimatedSection>
+        <TestimonialsSection />
 
         {/* Contact Us & Integrated Google Maps Location */}
-        <AnimatedSection direction="up" threshold={0.06}>
-          <ContactSection />
-        </AnimatedSection>
+        <ContactSection />
       </main>
 
-      {/* Footer */}
-      <Footer />
+      {/* Footer with Dedicated 100-Layer Protected Admin Portal Trigger */}
+      <Footer onOpenAdmin={() => setIsSecurityModalOpen(true)} />
 
-      {/* Floating Scroll To Top with SVG Progress Ring & Quick Actions */}
+      {/* Scroll To Top Button */}
       <ScrollToTop />
 
       {/* Order Bill Estimator Slide-Over Drawer */}
@@ -120,16 +115,33 @@ export default function App() {
         onAddItem={handleAddItem}
         onRemoveItem={handleRemoveItem}
         onClearOrder={handleClearOrder}
+        initialOrderType={drawerOrderType}
       />
 
-      {/* Sticky Mobile Quick Action Bar with Touch Compliance (>= 44px touch targets) */}
+      {/* 100-Layer Internal Security Passcode Modal */}
+      <AdminSecurityModal
+        isOpen={isSecurityModalOpen}
+        onClose={() => setIsSecurityModalOpen(false)}
+        onSuccess={() => {
+          setIsSecurityModalOpen(false);
+          setIsAdminPanelOpen(true);
+        }}
+      />
+
+      {/* Full-Screen Dedicated Admin Command Center with Left Navigation */}
+      <AdminPanelModal
+        isOpen={isAdminPanelOpen}
+        onClose={() => setIsAdminPanelOpen(false)}
+      />
+
+      {/* Sticky Mobile Quick Action Bar */}
       <aside
         aria-label="Quick Mobile Actions"
-        className="lg:hidden fixed bottom-0 left-0 right-0 z-30 bg-[#120e0a]/95 backdrop-blur-md border-t border-amber-900/40 px-3 py-2 flex items-center justify-between gap-2 shadow-2xl"
+        className="lg:hidden fixed bottom-0 left-0 right-0 z-30 bg-[#120e0a] border-t border-amber-900/40 px-3 py-2 flex items-center justify-between gap-2 shadow-2xl"
       >
         <a
-          href={`tel:${RESTAURANT_INFO.phonePrimary.replace(/\s+/g, '')}`}
-          className="flex-1 py-3 px-3 bg-[#1c1612] hover:bg-[#282019] active:bg-[#282019] text-stone-200 text-xs font-semibold uppercase tracking-wider rounded-xl flex items-center justify-center gap-1.5 transition-colors border border-amber-900/30 min-h-[44px] touch-manipulation"
+          href={`tel:${restaurantInfo.phonePrimary.replace(/\s+/g, '')}`}
+          className="flex-1 py-3 px-3 bg-[#1c1612] hover:bg-[#282019] text-stone-200 text-xs font-semibold uppercase tracking-wider rounded-xl flex items-center justify-center gap-1.5 border border-amber-900/30 min-h-[44px]"
         >
           <Phone className="w-4 h-4 text-amber-400" />
           <span>Call</span>
@@ -137,20 +149,37 @@ export default function App() {
 
         <a
           href="#menu"
-          className="py-3 px-3.5 bg-[#1c1612] hover:bg-[#282019] active:bg-[#282019] text-amber-300 text-xs font-semibold uppercase tracking-wider rounded-xl flex items-center justify-center gap-1.5 transition-colors border border-amber-900/30 min-h-[44px] touch-manipulation"
+          className="py-3 px-3.5 bg-[#1c1612] hover:bg-[#282019] text-amber-300 text-xs font-semibold uppercase tracking-wider rounded-xl flex items-center justify-center gap-1.5 border border-amber-900/30 min-h-[44px]"
         >
           <Utensils className="w-4 h-4 text-amber-400" />
           <span>Menu</span>
         </a>
 
+        <button
+          onClick={() => setIsSecurityModalOpen(true)}
+          className="p-3 bg-[#1c1612] hover:bg-[#282019] text-amber-400 rounded-xl border border-amber-900/30 flex items-center justify-center min-h-[44px] min-w-[44px] cursor-pointer"
+          aria-label="Staff Portal"
+          title="Staff Portal"
+        >
+          <ShieldAlert className="w-4 h-4" />
+        </button>
+
         <a
           href="#booking"
-          className="flex-1 py-3 px-3 bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-500 hover:to-emerald-600 active:from-emerald-700 active:to-emerald-800 text-white text-xs font-bold uppercase tracking-wider rounded-xl flex items-center justify-center gap-1.5 transition-colors shadow-md border border-emerald-400/30 min-h-[44px] touch-manipulation"
+          className="flex-1 py-3 px-3 bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-500 hover:to-emerald-600 text-white text-xs font-bold uppercase tracking-wider rounded-xl flex items-center justify-center gap-1.5 shadow-md border border-emerald-400/30 min-h-[44px]"
         >
           <MessageCircle className="w-4 h-4 text-emerald-200" />
           <span>Book WhatsApp</span>
         </a>
       </aside>
     </div>
+  );
+}
+
+export default function App() {
+  return (
+    <AdminDataProvider>
+      <MainApp />
+    </AdminDataProvider>
   );
 }
