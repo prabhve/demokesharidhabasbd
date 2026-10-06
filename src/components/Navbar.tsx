@@ -144,7 +144,7 @@ export const Navbar: React.FC<NavbarProps> = ({ orderCount = 0, onOpenOrderDrawe
                 >
                   <span>{link.label}</span>
                   {isActive && (
-                    <div className="absolute -bottom-1 left-0 right-0 h-[2px] bg-gradient-to-r from-amber-500 via-amber-300 to-yellow-200 rounded-full" />
+                    <div className="absolute -bottom-1 left-0 right-0 h-[2.5px] bg-gradient-to-r from-amber-500 via-amber-300 to-yellow-200 rounded-full shadow-[0_0_8px_rgba(251,191,36,0.8)] animate-pulse" />
                   )}
                 </a>
               );

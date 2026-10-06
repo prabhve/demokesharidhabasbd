@@ -13,6 +13,7 @@ import { ContactSection } from './components/ContactSection';
 import { Footer } from './components/Footer';
 import { OrderCalculatorDrawer, OrderType } from './components/OrderCalculatorDrawer';
 import { ScrollToTop } from './components/ScrollToTop';
+import { ScrollProgressBar } from './components/ScrollProgressBar';
 import { AdminDataProvider, useAdminData } from './context/AdminDataContext';
 import { AdminSecurityModal } from './components/admin/AdminSecurityModal';
 import { AdminPanelModal } from './components/admin/AdminPanelModal';
@@ -63,6 +64,9 @@ function MainApp() {
 
   return (
     <div className="min-h-screen bg-[#0c0907] text-stone-100 flex flex-col selection:bg-amber-500 selection:text-stone-950 font-sans antialiased overflow-x-hidden">
+      {/* Scroll Progress Bar across the whole site */}
+      <ScrollProgressBar />
+
       {/* Top Bar Navigation */}
       <Navbar
         orderCount={totalItemCount}

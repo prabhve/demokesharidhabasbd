@@ -1,6 +1,7 @@
 import React from 'react';
 import { MapPin, Phone, MessageCircle, Heart, UtensilsCrossed, ShieldAlert, Lock } from 'lucide-react';
 import { useAdminData } from '../context/AdminDataContext';
+import { AnimatedSection } from './AnimatedSection';
 
 interface FooterProps {
   onOpenAdmin?: () => void;
@@ -12,8 +13,9 @@ export const Footer: React.FC<FooterProps> = ({ onOpenAdmin }) => {
   return (
     <footer className="bg-[#080605] text-stone-400 text-xs border-t border-amber-900/30">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-12 sm:pt-14 pb-28 sm:pb-24 lg:pb-16">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10">
-          {/* Col 1: Brand & Heritage */}
+        <AnimatedSection direction="up" delay={50}>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10">
+            {/* Col 1: Brand & Heritage */}
           <div className="space-y-3.5 sm:space-y-4">
             <div className="flex items-center gap-2.5">
               <div className="w-8 h-8 rounded-full bg-gradient-to-br from-amber-500 to-amber-900 flex items-center justify-center border border-amber-400/40">
@@ -155,8 +157,10 @@ export const Footer: React.FC<FooterProps> = ({ onOpenAdmin }) => {
             </div>
           </div>
         </div>
+      </AnimatedSection>
 
-        {/* Bottom Bar with 100-Layer Protected Admin Portal Entry */}
+      {/* Bottom Bar with 100-Layer Protected Admin Portal Entry */}
+      <AnimatedSection direction="up" delay={150}>
         <div className="mt-10 sm:mt-14 pt-6 border-t border-amber-900/30 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-stone-500 text-center sm:text-left">
           <div>
             © {new Date().getFullYear()} Keshari Dhaba & Family Restaurant. All rights reserved.
@@ -181,6 +185,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenAdmin }) => {
             <span>for Robertsganj & Sonbhadra highway roadtrippers</span>
           </div>
         </div>
+      </AnimatedSection>
       </div>
     </footer>
   );

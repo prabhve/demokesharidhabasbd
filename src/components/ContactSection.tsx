@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { MapPin, Phone, MessageCircle, Clock, Send, CheckCircle2, Share2 } from 'lucide-react';
 import { useAdminData } from '../context/AdminDataContext';
 import { GoogleMapsEmbed } from './GoogleMapsEmbed';
+import { AnimatedSection } from './AnimatedSection';
 
 export const ContactSection: React.FC = () => {
   const { restaurantInfo } = useAdminData();
@@ -22,22 +23,24 @@ export const ContactSection: React.FC = () => {
     <section id="contact" className="py-16 sm:py-20 lg:py-28 bg-[#0f0c09] text-white border-b border-amber-900/30 relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         {/* Section Header */}
-        <div className="max-w-3xl mb-10 sm:mb-16">
-          <div className="inline-flex items-center gap-2 text-[11px] sm:text-xs font-semibold uppercase tracking-widest text-amber-400 mb-2">
-            <span>Location & Direct Communication</span>
+        <AnimatedSection direction="up" delay={50}>
+          <div className="max-w-3xl mb-10 sm:mb-16">
+            <div className="inline-flex items-center gap-2 text-[11px] sm:text-xs font-semibold uppercase tracking-widest text-amber-400 mb-2">
+              <span>Location & Direct Communication</span>
+            </div>
+            <h2 className="font-serif text-2xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight text-balance">
+              Visit & Connect with <span className="text-gold-gradient italic">Keshari Dhaba</span>.
+            </h2>
+            <p className="mt-2.5 sm:mt-3 text-stone-300 text-xs sm:text-base leading-relaxed font-light">
+              Planning a private celebration in our AC hall, bus tour catering, or quick highway meal? Reach out directly via WhatsApp, phone, or visit our restaurant in Amarati, Robertsganj.
+            </p>
           </div>
-          <h2 className="font-serif text-2xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight text-balance">
-            Visit & Connect with <span className="text-gold-gradient italic">Keshari Dhaba</span>.
-          </h2>
-          <p className="mt-2.5 sm:mt-3 text-stone-300 text-xs sm:text-base leading-relaxed font-light">
-            Planning a private celebration in our AC hall, bus tour catering, or quick highway meal? Reach out directly via WhatsApp, phone, or visit our restaurant in Amarati, Robertsganj.
-          </p>
-        </div>
+        </AnimatedSection>
 
         {/* 2-Column Split */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-10 lg:gap-12 items-start mb-12 sm:mb-16">
           {/* Contact Details & Social Links (6 cols) */}
-          <div className="lg:col-span-6 space-y-6">
+          <AnimatedSection direction="right" delay={150} className="lg:col-span-6 w-full space-y-6">
             <div className="p-5 sm:p-8 bg-[#140f0c] rounded-2xl border border-amber-500/30 shadow-2xl space-y-5 sm:space-y-6">
               {/* Address */}
               <div className="flex items-start gap-3.5 sm:gap-4">
@@ -175,82 +178,84 @@ export const ContactSection: React.FC = () => {
                 </a>
               </div>
             </div>
-          </div>
+          </AnimatedSection>
 
           {/* Quick Inquiry Form (6 cols) */}
-          <div className="lg:col-span-6 bg-[#140f0c] p-5 sm:p-8 rounded-2xl border border-amber-500/30 shadow-2xl">
-            <h3 className="font-serif text-xl sm:text-2xl font-bold text-white mb-2">
-              Send an Instant Inquiry or Event Query
-            </h3>
-            <p className="text-xs text-stone-400 mb-5 sm:mb-6 font-light">
-              Questions regarding birthday bookings, customized family thali menus, or large tour bus lunch halt? Send a message and our manager will reply immediately on WhatsApp.
-            </p>
+          <AnimatedSection direction="left" delay={250} className="lg:col-span-6 w-full">
+            <div className="bg-[#140f0c] p-5 sm:p-8 rounded-2xl border border-amber-500/30 shadow-2xl">
+              <h3 className="font-serif text-xl sm:text-2xl font-bold text-white mb-2">
+                Send an Instant Inquiry or Event Query
+              </h3>
+              <p className="text-xs text-stone-400 mb-5 sm:mb-6 font-light">
+                Questions regarding birthday bookings, customized family thali menus, or large tour bus lunch halt? Send a message and our manager will reply immediately on WhatsApp.
+              </p>
 
-            <form onSubmit={handleSubmitInquiry} className="space-y-4">
-              <div>
-                <label className="block text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-amber-300/90 mb-1.5 sm:mb-2">
-                  Your Name *
-                </label>
-                <input
-                  type="text"
-                  required
-                  placeholder="e.g. Rameshwar Kumar"
-                  value={senderName}
-                  onChange={(e) => setSenderName(e.target.value)}
-                  className="w-full px-3.5 sm:px-4 py-2.5 bg-[#1b1511] border border-amber-900/40 rounded-xl text-base sm:text-sm text-stone-100 placeholder:text-stone-500 focus:outline-hidden focus:border-amber-400 min-h-[44px]"
-                />
-              </div>
-
-              <div>
-                <label className="block text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-amber-300/90 mb-1.5 sm:mb-2">
-                  WhatsApp Contact Number *
-                </label>
-                <input
-                  type="tel"
-                  required
-                  placeholder="e.g. 98765 43210"
-                  value={senderPhone}
-                  onChange={(e) => setSenderPhone(e.target.value)}
-                  className="w-full px-3.5 sm:px-4 py-2.5 bg-[#1b1511] border border-amber-900/40 rounded-xl text-base sm:text-sm text-stone-100 placeholder:text-stone-500 focus:outline-hidden focus:border-amber-400 font-mono min-h-[44px]"
-                />
-              </div>
-
-              <div>
-                <label className="block text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-amber-300/90 mb-1.5 sm:mb-2">
-                  Message / Requirements *
-                </label>
-                <textarea
-                  rows={4}
-                  required
-                  placeholder="e.g. We are a family of 12 stopping in Robertsganj en route from Varanasi. Could you have Maharaja Thalis ready by 1:30 PM?"
-                  value={senderQuery}
-                  onChange={(e) => setSenderQuery(e.target.value)}
-                  className="w-full px-3.5 sm:px-4 py-2.5 bg-[#1b1511] border border-amber-900/40 rounded-xl text-base sm:text-sm text-stone-100 placeholder:text-stone-500 focus:outline-hidden focus:border-amber-400 resize-none font-light"
-                />
-              </div>
-
-              <button
-                type="submit"
-                className="w-full py-3.5 px-6 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-stone-950 font-bold text-xs sm:text-sm uppercase tracking-wider rounded-xl flex items-center justify-center gap-2 cursor-pointer shadow-lg shadow-amber-950/60 min-h-[48px]"
-              >
-                <Send className="w-4 h-4" />
-                <span>Send via WhatsApp Direct</span>
-              </button>
-
-              {sentSuccess && (
-                <div className="p-3.5 bg-emerald-950/60 border border-emerald-500/40 text-emerald-300 text-xs rounded-xl flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
-                  <span>Inquiry prepared! Opening WhatsApp to send directly to manager.</span>
+              <form onSubmit={handleSubmitInquiry} className="space-y-4">
+                <div>
+                  <label className="block text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-amber-300/90 mb-1.5 sm:mb-2">
+                    Your Name *
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    placeholder="e.g. Rameshwar Kumar"
+                    value={senderName}
+                    onChange={(e) => setSenderName(e.target.value)}
+                    className="w-full px-3.5 sm:px-4 py-2.5 bg-[#1b1511] border border-amber-900/40 rounded-xl text-base sm:text-sm text-stone-100 placeholder:text-stone-500 focus:outline-hidden focus:border-amber-400 min-h-[44px]"
+                  />
                 </div>
-              )}
-            </form>
-          </div>
+
+                <div>
+                  <label className="block text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-amber-300/90 mb-1.5 sm:mb-2">
+                    WhatsApp Contact Number *
+                  </label>
+                  <input
+                    type="tel"
+                    required
+                    placeholder="e.g. 98765 43210"
+                    value={senderPhone}
+                    onChange={(e) => setSenderPhone(e.target.value)}
+                    className="w-full px-3.5 sm:px-4 py-2.5 bg-[#1b1511] border border-amber-900/40 rounded-xl text-base sm:text-sm text-stone-100 placeholder:text-stone-500 focus:outline-hidden focus:border-amber-400 font-mono min-h-[44px]"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-amber-300/90 mb-1.5 sm:mb-2">
+                    Message / Requirements *
+                  </label>
+                  <textarea
+                    rows={4}
+                    required
+                    placeholder="e.g. We are a family of 12 stopping in Robertsganj en route from Varanasi. Could you have Maharaja Thalis ready by 1:30 PM?"
+                    value={senderQuery}
+                    onChange={(e) => setSenderQuery(e.target.value)}
+                    className="w-full px-3.5 sm:px-4 py-2.5 bg-[#1b1511] border border-amber-900/40 rounded-xl text-base sm:text-sm text-stone-100 placeholder:text-stone-500 focus:outline-hidden focus:border-amber-400 resize-none font-light"
+                  />
+                </div>
+
+                <button
+                  type="submit"
+                  className="w-full py-3.5 px-6 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-stone-950 font-bold text-xs sm:text-sm uppercase tracking-wider rounded-xl flex items-center justify-center gap-2 cursor-pointer shadow-lg shadow-amber-950/60 min-h-[48px] transition-all duration-200 hover:scale-[1.02] active:scale-98"
+                >
+                  <Send className="w-4 h-4" />
+                  <span>Send via WhatsApp Direct</span>
+                </button>
+
+                {sentSuccess && (
+                  <div className="p-3.5 bg-emerald-950/60 border border-emerald-500/40 text-emerald-300 text-xs rounded-xl flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                    <span>Inquiry prepared! Opening WhatsApp to send directly to manager.</span>
+                  </div>
+                )}
+              </form>
+            </div>
+          </AnimatedSection>
         </div>
 
         {/* Integrated Google Maps Location Block */}
-        <div>
+        <AnimatedSection direction="up" delay={300}>
           <GoogleMapsEmbed />
-        </div>
+        </AnimatedSection>
       </div>
     </section>
   );

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Maximize2, X, ChevronLeft, ChevronRight, Sparkles, Trees, UtensilsCrossed, Flame, Wind } from 'lucide-react';
 import { useAdminData } from '../context/AdminDataContext';
+import { AnimatedSection } from './AnimatedSection';
 
 export interface GalleryItem {
   id: string;
@@ -211,99 +212,109 @@ export const GallerySection: React.FC = () => {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 relative">
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 sm:gap-6 mb-8 sm:mb-12">
-          <div className="max-w-2xl">
-            <div className="inline-flex items-center gap-2 text-[11px] sm:text-xs font-semibold uppercase tracking-widest text-amber-400 mb-2">
-              <Sparkles className="w-3.5 h-3.5" />
-              <span>Visual Journey · Dhaba Moments & Culinary Craft</span>
+        <AnimatedSection direction="up" delay={50}>
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 sm:gap-6 mb-8 sm:mb-12">
+            <div className="max-w-2xl">
+              <div className="inline-flex items-center gap-2 text-[11px] sm:text-xs font-semibold uppercase tracking-widest text-amber-400 mb-2">
+                <Sparkles className="w-3.5 h-3.5" />
+                <span>Visual Journey · Dhaba Moments & Culinary Craft</span>
+              </div>
+              <h2 className="font-serif text-2xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight text-balance">
+                The <span className="text-gold-gradient italic">Keshari Dhaba</span> Visual Gallery.
+              </h2>
+              <p className="mt-2.5 sm:mt-3 text-stone-300 text-xs sm:text-base leading-relaxed font-light">
+                Glimpse into our lush garden courtyard, live charcoal clay tandoors, pure desi ghee curries, and serene AC family hall in Robertsganj.
+              </p>
             </div>
-            <h2 className="font-serif text-2xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight text-balance">
-              The <span className="text-gold-gradient italic">Keshari Dhaba</span> Visual Gallery.
-            </h2>
-            <p className="mt-2.5 sm:mt-3 text-stone-300 text-xs sm:text-base leading-relaxed font-light">
-              Glimpse into our lush garden courtyard, live charcoal clay tandoors, pure desi ghee curries, and serene AC family hall in Robertsganj.
-            </p>
-          </div>
 
-          <div className="text-[11px] sm:text-xs text-amber-300/80 font-mono flex items-center gap-2 bg-[#16120e] px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-xl border border-amber-900/30 shrink-0 self-start md:self-auto">
-            <span>Showing {filteredItems.length} Photographs</span>
+            <div className="text-[11px] sm:text-xs text-amber-300/80 font-mono flex items-center gap-2 bg-[#16120e] px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-xl border border-amber-900/30 shrink-0 self-start md:self-auto">
+              <span>Showing {filteredItems.length} Photographs</span>
+            </div>
           </div>
-        </div>
+        </AnimatedSection>
 
         {/* Category Tabs */}
-        <div className="flex items-center gap-2 overflow-x-auto pb-3 sm:pb-4 mb-8 sm:mb-10 scrollbar-none -mx-4 px-4 sm:mx-0 sm:px-0">
-          {CATEGORIES.map((cat) => {
-            const Icon = cat.icon;
-            const isActive = activeCategory === cat.id;
-            return (
-              <button
-                key={cat.id}
-                onClick={() => setActiveCategory(cat.id)}
-                className={`relative px-3.5 sm:px-4 py-2 sm:py-2.5 text-[11px] sm:text-xs font-semibold uppercase tracking-wider rounded-xl whitespace-nowrap flex items-center gap-2 cursor-pointer shrink-0 min-h-[38px] ${
-                  isActive
-                    ? 'bg-amber-500 text-stone-950 font-bold shadow-md'
-                    : 'bg-[#16120e] text-stone-300 hover:text-white border border-amber-900/30'
-                }`}
-              >
-                <Icon className={`w-3.5 h-3.5 ${isActive ? 'text-stone-950' : 'text-amber-400'}`} />
-                <span>{cat.label}</span>
-              </button>
-            );
-          })}
-        </div>
+        <AnimatedSection direction="up" delay={150}>
+          <div className="flex items-center gap-2 overflow-x-auto pb-3 sm:pb-4 mb-8 sm:mb-10 scrollbar-none -mx-4 px-4 sm:mx-0 sm:px-0">
+            {CATEGORIES.map((cat) => {
+              const Icon = cat.icon;
+              const isActive = activeCategory === cat.id;
+              return (
+                <button
+                  key={cat.id}
+                  onClick={() => setActiveCategory(cat.id)}
+                  className={`relative px-3.5 sm:px-4 py-2 sm:py-2.5 text-[11px] sm:text-xs font-semibold uppercase tracking-wider rounded-xl whitespace-nowrap flex items-center gap-2 cursor-pointer shrink-0 min-h-[38px] transition-all duration-200 hover:scale-105 active:scale-95 ${
+                    isActive
+                      ? 'bg-amber-500 text-stone-950 font-bold shadow-md'
+                      : 'bg-[#16120e] text-stone-300 hover:text-white border border-amber-900/30'
+                  }`}
+                >
+                  <Icon className={`w-3.5 h-3.5 ${isActive ? 'text-stone-950' : 'text-amber-400'}`} />
+                  <span>{cat.label}</span>
+                </button>
+              );
+            })}
+          </div>
+        </AnimatedSection>
 
         {/* Masonry Grid Layout */}
         <div className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-4 sm:gap-6 space-y-4 sm:space-y-6">
-          {filteredItems.map((item) => (
-            <div
+          {filteredItems.map((item, index) => (
+            <AnimatedSection
               key={item.id}
-              onClick={() => setSelectedItem(item)}
-              className="break-inside-avoid group relative rounded-2xl overflow-hidden bg-[#140f0c] border border-amber-900/30 hover:border-amber-500/50 cursor-pointer"
+              direction="up"
+              delay={(index % 4) * 80}
+              className="break-inside-avoid"
             >
-              {/* Full-width Image with natural aspect ratios */}
-              <div className={`relative w-full ${item.aspectRatioClass} overflow-hidden`}>
-                <img
-                  src={item.imageUrl}
-                  alt={item.title}
-                  loading="lazy"
-                  className="w-full h-full object-cover object-center"
-                />
+              <div
+                onClick={() => setSelectedItem(item)}
+                className="group relative rounded-2xl overflow-hidden bg-[#140f0c] border border-amber-900/30 hover:border-amber-500/50 cursor-pointer transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-amber-950/40"
+              >
+                {/* Full-width Image with natural aspect ratios */}
+                <div className={`relative w-full ${item.aspectRatioClass} overflow-hidden`}>
+                  <img
+                    src={item.imageUrl}
+                    alt={item.title}
+                    loading="lazy"
+                    className="w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-108"
+                  />
 
-                {/* Atmospheric Dark Gradient Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/35 to-black/10 opacity-75" />
+                  {/* Atmospheric Dark Gradient Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/35 to-black/10 opacity-75 group-hover:opacity-65 transition-opacity" />
 
-                {/* Top Category Badge */}
-                <div className="absolute top-3 left-3 flex items-center gap-2">
-                  <span className="px-2.5 py-1 rounded-md bg-stone-950/80 text-[10px] font-bold uppercase tracking-wider text-amber-300 border border-amber-500/30 shadow-sm">
-                    {item.highlightTag}
-                  </span>
-                </div>
+                  {/* Top Category Badge */}
+                  <div className="absolute top-3 left-3 flex items-center gap-2">
+                    <span className="px-2.5 py-1 rounded-md bg-stone-950/80 text-[10px] font-bold uppercase tracking-wider text-amber-300 border border-amber-500/30 shadow-sm">
+                      {item.highlightTag}
+                    </span>
+                  </div>
 
-                {/* Expand Icon */}
-                <div className="absolute top-3 right-3 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-stone-950/80 flex items-center justify-center text-amber-300 border border-amber-500/30 shadow-md">
-                  <Maximize2 className="w-3.5 h-3.5" />
-                </div>
+                  {/* Expand Icon */}
+                  <div className="absolute top-3 right-3 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-stone-950/80 flex items-center justify-center text-amber-300 border border-amber-500/30 shadow-md group-hover:bg-amber-500 group-hover:text-stone-950 transition-colors">
+                    <Maximize2 className="w-3.5 h-3.5" />
+                  </div>
 
-                {/* Caption / Title info at bottom */}
-                <div className="absolute bottom-0 inset-x-0 p-4 sm:p-5">
-                  <span className="text-[10px] font-semibold text-amber-400 uppercase tracking-widest block mb-1">
-                    {item.categoryLabel}
-                  </span>
-                  <h3 className="font-serif text-base sm:text-lg font-bold text-white leading-snug">
-                    {item.title}
-                  </h3>
-                  {item.hindiTitle && (
-                    <div className="text-xs text-amber-200/70 font-serif mt-0.5">
-                      {item.hindiTitle}
-                    </div>
-                  )}
+                  {/* Caption / Title info at bottom */}
+                  <div className="absolute bottom-0 inset-x-0 p-4 sm:p-5">
+                    <span className="text-[10px] font-semibold text-amber-400 uppercase tracking-widest block mb-1">
+                      {item.categoryLabel}
+                    </span>
+                    <h3 className="font-serif text-base sm:text-lg font-bold text-white leading-snug">
+                      {item.title}
+                    </h3>
+                    {item.hindiTitle && (
+                      <div className="text-xs text-amber-200/70 font-serif mt-0.5">
+                        {item.hindiTitle}
+                      </div>
+                    )}
 
-                  <p className="mt-1.5 text-stone-300 text-xs line-clamp-2 font-light leading-relaxed block">
-                    {item.caption}
-                  </p>
+                    <p className="mt-1.5 text-stone-300 text-xs line-clamp-2 font-light leading-relaxed block">
+                      {item.caption}
+                    </p>
+                  </div>
                 </div>
               </div>
-            </div>
+            </AnimatedSection>
           ))}
         </div>
       </div>

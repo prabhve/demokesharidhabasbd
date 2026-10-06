@@ -3,6 +3,7 @@ import { Search, Plus, Check, ShoppingBag, Flame, Sparkles, X, Info, GraduationC
 import { MenuItem } from '../data/restaurantData';
 import { OrderType } from './OrderCalculatorDrawer';
 import { useAdminData } from '../context/AdminDataContext';
+import { AnimatedSection } from './AnimatedSection';
 
 interface MenuSectionProps {
   orderItems: Record<string, number>;
@@ -54,61 +55,66 @@ export const MenuSection: React.FC<MenuSectionProps> = ({
     <section id="menu" className="py-16 sm:py-20 lg:py-28 bg-[#0f0c09] text-white border-b border-amber-900/30 relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 sm:gap-6 mb-8 sm:mb-12">
-          <div>
-            <div className="inline-flex items-center gap-2 text-[11px] sm:text-xs font-semibold uppercase tracking-widest text-amber-400 mb-2">
-              <span>Pure Ingredients & Desi Ghee</span>
+        <AnimatedSection direction="up" delay={50}>
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 sm:gap-6 mb-8 sm:mb-12">
+            <div>
+              <div className="inline-flex items-center gap-2 text-[11px] sm:text-xs font-semibold uppercase tracking-widest text-amber-400 mb-2">
+                <span>Pure Ingredients & Desi Ghee</span>
+              </div>
+              <h2 className="font-serif text-2xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight text-balance">
+                The Culinary Menu of <span className="text-gold-gradient italic">Keshari Dhaba</span>.
+              </h2>
+              <p className="mt-2.5 sm:mt-3 text-stone-300 text-xs sm:text-sm max-w-xl font-light leading-relaxed">
+                Explore our culinary creations — from double-tempered clay handi lentils and slow-dum curries to charcoal tandoori breads, thick kulhad lassi, and royal thalis.
+              </p>
             </div>
-            <h2 className="font-serif text-2xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight text-balance">
-              The Culinary Menu of <span className="text-gold-gradient italic">Keshari Dhaba</span>.
-            </h2>
-            <p className="mt-2.5 sm:mt-3 text-stone-300 text-xs sm:text-sm max-w-xl font-light leading-relaxed">
-              Explore our culinary creations — from double-tempered clay handi lentils and slow-dum curries to charcoal tandoori breads, thick kulhad lassi, and royal thalis.
-            </p>
-          </div>
 
-          {/* Quick Floating Table Order Tracker */}
-          {totalOrderedItems > 0 && (
-            <button
-              onClick={() => onOpenOrderDrawer()}
-              className="inline-flex items-center gap-2 px-4 py-2.5 sm:px-5 sm:py-3 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-stone-950 text-xs font-bold uppercase tracking-wider rounded-xl shadow-lg shadow-amber-950/50 transition-colors cursor-pointer self-start md:self-auto min-h-[44px]"
-            >
-              <ShoppingBag className="w-4 h-4" />
-              <span>Table Order ({totalOrderedItems})</span>
-              <span className="bg-stone-950 text-amber-300 px-2 py-0.5 rounded text-[10px] sm:text-[11px]">View Bill</span>
-            </button>
-          )}
-        </div>
+            {/* Quick Floating Table Order Tracker */}
+            {totalOrderedItems > 0 && (
+              <button
+                onClick={() => onOpenOrderDrawer()}
+                className="inline-flex items-center gap-2 px-4 py-2.5 sm:px-5 sm:py-3 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-stone-950 text-xs font-bold uppercase tracking-wider rounded-xl shadow-lg shadow-amber-950/50 transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer self-start md:self-auto min-h-[44px]"
+              >
+                <ShoppingBag className="w-4 h-4" />
+                <span>Table Order ({totalOrderedItems})</span>
+                <span className="bg-stone-950 text-amber-300 px-2 py-0.5 rounded text-[10px] sm:text-[11px]">View Bill</span>
+              </button>
+            )}
+          </div>
+        </AnimatedSection>
 
         {/* REC Sonbhadra Students & Campus Delivery Banner */}
-        <div className="mb-8 p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-amber-950/80 via-[#1a140f] to-amber-950/80 border border-amber-500/40 flex flex-col md:flex-row md:items-center justify-between gap-4 shadow-xl">
-          <div className="flex items-start sm:items-center gap-3.5">
-            <div className="w-11 h-11 rounded-xl bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-amber-300 shrink-0">
-              <GraduationCap className="w-6 h-6" />
-            </div>
-            <div>
-              <div className="text-xs sm:text-sm font-bold text-white flex items-center gap-2 flex-wrap">
-                <span>Rajkiya Engineering College (REC) Sonbhadra Delivery</span>
-                <span className="bg-amber-500/20 text-amber-300 text-[10px] px-2 py-0.5 rounded font-mono font-bold border border-amber-500/30">
-                  Hostel Gate Drop · ₹{recDeliveryInfo.standardDeliveryCharge} Delivery
-                </span>
+        <AnimatedSection direction="up" delay={120}>
+          <div className="mb-8 p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-amber-950/80 via-[#1a140f] to-amber-950/80 border border-amber-500/40 flex flex-col md:flex-row md:items-center justify-between gap-4 shadow-xl hover:border-amber-400/60 transition-colors">
+            <div className="flex items-start sm:items-center gap-3.5">
+              <div className="w-11 h-11 rounded-xl bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-amber-300 shrink-0">
+                <GraduationCap className="w-6 h-6" />
               </div>
-              <div className="text-[11px] sm:text-xs text-stone-300 font-light mt-0.5 leading-relaxed">
-                Boys Hostels (BH-1, BH-2, BH-3), Girls Hostel & Faculty Quarters delivery. Pay via restaurant QR code and get instant phone call confirmation!
+              <div>
+                <div className="text-xs sm:text-sm font-bold text-white flex items-center gap-2 flex-wrap">
+                  <span>Rajkiya Engineering College (REC) Sonbhadra Delivery</span>
+                  <span className="bg-amber-500/20 text-amber-300 text-[10px] px-2 py-0.5 rounded font-mono font-bold border border-amber-500/30">
+                    Hostel Gate Drop · ₹{recDeliveryInfo.standardDeliveryCharge} Delivery
+                  </span>
+                </div>
+                <div className="text-[11px] sm:text-xs text-stone-300 font-light mt-0.5 leading-relaxed">
+                  Boys Hostels (BH-1, BH-2, BH-3), Girls Hostel & Faculty Quarters delivery. Pay via restaurant QR code and get instant phone call confirmation!
+                </div>
               </div>
             </div>
+            <button
+              onClick={() => onOpenOrderDrawer('REC Sonbhadra Delivery')}
+              className="w-full md:w-auto px-4 py-2.5 bg-gradient-to-r from-amber-500 to-amber-400 hover:from-amber-400 hover:to-amber-300 text-stone-950 text-xs font-bold uppercase tracking-wider rounded-xl shadow-md flex items-center justify-center gap-2 whitespace-nowrap cursor-pointer min-h-[42px] shrink-0 transition-all duration-200 hover:scale-105 active:scale-95"
+            >
+              <span>Order for REC Campus</span>
+              <ArrowRight className="w-4 h-4" />
+            </button>
           </div>
-          <button
-            onClick={() => onOpenOrderDrawer('REC Sonbhadra Delivery')}
-            className="w-full md:w-auto px-4 py-2.5 bg-gradient-to-r from-amber-500 to-amber-400 hover:from-amber-400 hover:to-amber-300 text-stone-950 text-xs font-bold uppercase tracking-wider rounded-xl shadow-md flex items-center justify-center gap-2 whitespace-nowrap cursor-pointer min-h-[42px] shrink-0"
-          >
-            <span>Order for REC Campus</span>
-            <ArrowRight className="w-4 h-4" />
-          </button>
-        </div>
+        </AnimatedSection>
 
         {/* Filter Controls Bar */}
-        <div className="space-y-4 mb-8 sm:mb-12">
+        <AnimatedSection direction="up" delay={180}>
+          <div className="space-y-4 mb-8 sm:mb-12">
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
             {/* Search Input */}
             <div className="relative flex-1 max-w-md">
@@ -166,8 +172,9 @@ export const MenuSection: React.FC<MenuSectionProps> = ({
             })}
           </div>
         </div>
+      </AnimatedSection>
 
-        {/* Menu Dishes Grid */}
+      {/* Menu Dishes Grid */}
         {filteredItems.length === 0 ? (
           <div className="py-16 text-center bg-[#140f0c] rounded-2xl border border-amber-900/30">
             <p className="text-stone-400 text-sm">No dishes found matching your search.</p>
@@ -184,27 +191,31 @@ export const MenuSection: React.FC<MenuSectionProps> = ({
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-7">
-            {filteredItems.map((dish) => {
+            {filteredItems.map((dish, index) => {
               const countInOrder = orderItems[dish.id] || 0;
 
               return (
-                <div
+                <AnimatedSection
                   key={dish.id}
-                  className="group bg-[#140f0c] rounded-2xl border border-amber-900/30 overflow-hidden flex flex-col justify-between hover:border-amber-500/50"
+                  direction="up"
+                  delay={(index % 6) * 60}
                 >
-                  <div>
-                    {/* Dish Photo */}
-                    <div
-                      onClick={() => setPreviewDish(dish)}
-                      className="relative h-44 sm:h-48 overflow-hidden bg-stone-900 cursor-pointer"
-                    >
-                      <img
-                        src={dish.imageUrl}
-                        alt={dish.name}
-                        loading="lazy"
-                        className="w-full h-full object-cover object-center"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-[#140f0c] via-black/20 to-transparent" />
+                  <div
+                    className="group bg-[#140f0c] rounded-2xl border border-amber-900/30 overflow-hidden flex flex-col justify-between hover:border-amber-500/50 hover:-translate-y-1.5 transition-all duration-300 hover:shadow-2xl hover:shadow-amber-950/40 h-full"
+                  >
+                    <div>
+                      {/* Dish Photo */}
+                      <div
+                        onClick={() => setPreviewDish(dish)}
+                        className="relative h-44 sm:h-48 overflow-hidden bg-stone-900 cursor-pointer"
+                      >
+                        <img
+                          src={dish.imageUrl}
+                          alt={dish.name}
+                          loading="lazy"
+                          className="w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-108"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-[#140f0c] via-black/20 to-transparent" />
 
                       {/* Badges */}
                       <div className="absolute top-3 left-3 flex flex-wrap gap-1.5">
@@ -308,7 +319,7 @@ export const MenuSection: React.FC<MenuSectionProps> = ({
 
                     <button
                       onClick={() => setPreviewDish(dish)}
-                      className="p-2 text-stone-400 hover:text-amber-400 min-w-[36px] min-h-[36px] flex items-center justify-center"
+                      className="p-2 text-stone-400 hover:text-amber-400 min-w-[36px] min-h-[36px] flex items-center justify-center transition-colors"
                       title="View dish details"
                       aria-label="Dish information"
                     >
@@ -316,6 +327,7 @@ export const MenuSection: React.FC<MenuSectionProps> = ({
                     </button>
                   </div>
                 </div>
+              </AnimatedSection>
               );
             })}
           </div>

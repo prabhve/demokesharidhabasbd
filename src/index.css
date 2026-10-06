@@ -10,21 +10,8 @@
 }
 
 html {
-  scroll-behavior: auto;
+  scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
-}
-
-/* Completely remove all animations and transitions across the entire site */
-*,
-*::before,
-*::after {
-  animation: none !important;
-  animation-duration: 0s !important;
-  animation-delay: 0s !important;
-  animation-iteration-count: 1 !important;
-  transition: none !important;
-  transition-duration: 0s !important;
-  transition-delay: 0s !important;
 }
 
 body {
@@ -70,4 +57,60 @@ button, a, input, select, textarea {
 }
 ::-webkit-scrollbar-thumb:hover {
   background: #451a03;
+}
+
+/* Custom Ambient & Scroll Animation Keyframes */
+@keyframes floatSlow {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    opacity: 0.4;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.04);
+  }
+}
+
+@keyframes shimmerSweep {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.animate-float-slow {
+  animation: floatSlow 5s ease-in-out infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulseGlow 4s ease-in-out infinite;
+}
+
+.animate-shimmer-sweep {
+  animation: shimmerSweep 2.5s infinite;
+}
+
+/* Respect user's motion preferences for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

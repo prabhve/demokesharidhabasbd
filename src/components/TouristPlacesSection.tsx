@@ -24,6 +24,7 @@ import {
 } from 'lucide-react';
 import { TouristPlace } from '../data/restaurantData';
 import { useAdminData } from '../context/AdminDataContext';
+import { AnimatedSection } from './AnimatedSection';
 
 export const TouristPlacesSection: React.FC = () => {
   const { touristPlaces, restaurantInfo } = useAdminData();
@@ -92,18 +93,20 @@ export const TouristPlacesSection: React.FC = () => {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
         {/* Section Header */}
-        <div className="max-w-3xl mb-8 sm:mb-12">
-          <div className="inline-flex items-center gap-2 text-[11px] sm:text-xs font-semibold uppercase tracking-widest text-amber-400 mb-2.5 px-3 py-1 rounded-full bg-amber-950/60 border border-amber-500/20">
-            <Compass className="w-3.5 h-3.5 text-amber-400" />
-            <span>Sonbhadra Tourism Guide & Highway Pitstop</span>
+        <AnimatedSection direction="up" delay={50}>
+          <div className="max-w-3xl mb-8 sm:mb-12">
+            <div className="inline-flex items-center gap-2 text-[11px] sm:text-xs font-semibold uppercase tracking-widest text-amber-400 mb-2.5 px-3 py-1 rounded-full bg-amber-950/60 border border-amber-500/20">
+              <Compass className="w-3.5 h-3.5 text-amber-400" />
+              <span>Sonbhadra Tourism Guide & Highway Pitstop</span>
+            </div>
+            <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight text-balance leading-tight">
+              Explore Sonbhadra’s Wonders from <span className="text-gold-gradient italic">Keshari Dhaba</span>.
+            </h2>
+            <p className="mt-3 text-stone-300 text-xs sm:text-base leading-relaxed font-light">
+              Sonbhadra is Uttar Pradesh’s geological crown and ancient heritage jewel. Centrally located on the main highway in Robertsganj, Keshari Dhaba serves as your ideal tourism basecamp — energize with pure desi ghee parathas and hot chai before your adventure, or return for an evening handi dal feast.
+            </p>
           </div>
-          <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight text-balance leading-tight">
-            Explore Sonbhadra’s Wonders from <span className="text-gold-gradient italic">Keshari Dhaba</span>.
-          </h2>
-          <p className="mt-3 text-stone-300 text-xs sm:text-base leading-relaxed font-light">
-            Sonbhadra is Uttar Pradesh’s geological crown and ancient heritage jewel. Centrally located on the main highway in Robertsganj, Keshari Dhaba serves as your ideal tourism basecamp — energize with pure desi ghee parathas and hot chai before your adventure, or return for an evening handi dal feast.
-          </p>
-        </div>
+        </AnimatedSection>
 
         {/* View Mode & Quick Metric Strip */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8 pb-4 border-b border-amber-900/30">
@@ -399,25 +402,29 @@ export const TouristPlacesSection: React.FC = () => {
         {/* ATTRACTIONS GRID WITH IN-CARD INTERACTIVE MAP EMBEDS          */}
         {/* ============================================================== */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-          {filteredPlaces.map((place) => {
+          {filteredPlaces.map((place, index) => {
             const isMapExpanded = expandedMapId === place.id;
             const isSelectedForTrip = selectedTripIds.includes(place.id);
 
             return (
-              <div
+              <AnimatedSection
                 key={place.id}
-                className="group bg-[#140f0c] rounded-2xl border border-amber-900/30 overflow-hidden flex flex-col justify-between hover:border-amber-500/50 hover:shadow-2xl hover:shadow-amber-950/50"
+                direction="up"
+                delay={(index % 3) * 80}
               >
-                <div>
-                  {/* Photo with Overlay & Badges */}
-                  <div className="relative h-48 sm:h-52 overflow-hidden bg-stone-900">
-                    <img
-                      src={place.imageUrl}
-                      alt={place.name}
-                      loading="lazy"
-                      className="w-full h-full object-cover object-center"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#140f0c] via-black/30 to-transparent" />
+                <div
+                  className="group bg-[#140f0c] rounded-2xl border border-amber-900/30 overflow-hidden flex flex-col justify-between hover:border-amber-500/50 hover:shadow-2xl hover:shadow-amber-950/50 hover:-translate-y-1.5 transition-all duration-300 h-full"
+                >
+                  <div>
+                    {/* Photo with Overlay & Badges */}
+                    <div className="relative h-48 sm:h-52 overflow-hidden bg-stone-900">
+                      <img
+                        src={place.imageUrl}
+                        alt={place.name}
+                        loading="lazy"
+                        className="w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-108"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#140f0c] via-black/30 to-transparent" />
 
                     {/* Category Pill */}
                     <div className="absolute top-3 left-3 bg-stone-950/85 backdrop-blur-xs text-amber-300 border border-amber-500/30 text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded shadow-sm">
@@ -593,6 +600,7 @@ export const TouristPlacesSection: React.FC = () => {
                   )}
                 </div>
               </div>
+            </AnimatedSection>
             );
           })}
         </div>

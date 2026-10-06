@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { MessageCircle, Users, Clock, Phone, Copy, CheckCircle2, Calendar, Sparkles } from 'lucide-react';
 import { useAdminData } from '../context/AdminDataContext';
+import { AnimatedSection } from './AnimatedSection';
 
 export const TableBookingSection: React.FC = () => {
   const { restaurantInfo, addTableBooking } = useAdminData();
@@ -64,25 +65,28 @@ Please confirm table availability. Thank you!`;
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 relative">
         {/* Header */}
-        <div className="max-w-3xl mb-10 sm:mb-16">
-          <div className="inline-flex items-center gap-2 text-[11px] sm:text-xs font-semibold uppercase tracking-widest text-amber-400 mb-2">
-            <span>Direct WhatsApp Confirmation · Instant Table Hold</span>
+        <AnimatedSection direction="up" delay={50}>
+          <div className="max-w-3xl mb-10 sm:mb-16">
+            <div className="inline-flex items-center gap-2 text-[11px] sm:text-xs font-semibold uppercase tracking-widest text-amber-400 mb-2">
+              <span>Direct WhatsApp Confirmation · Instant Table Hold</span>
+            </div>
+            <h2 className="font-serif text-2xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight text-balance">
+              Reserve Your Table at <span className="text-gold-gradient italic">Keshari Dhaba</span>.
+            </h2>
+            <p className="mt-2.5 sm:mt-3 text-stone-300 text-xs sm:text-base leading-relaxed font-light">
+              Fill out your dining details. Our system formats a polite WhatsApp reservation request ready to send directly to our restaurant manager for instant priority seating.
+            </p>
           </div>
-          <h2 className="font-serif text-2xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight text-balance">
-            Reserve Your Table at <span className="text-gold-gradient italic">Keshari Dhaba</span>.
-          </h2>
-          <p className="mt-2.5 sm:mt-3 text-stone-300 text-xs sm:text-base leading-relaxed font-light">
-            Fill out your dining details. Our system formats a polite WhatsApp reservation request ready to send directly to our restaurant manager for instant priority seating.
-          </p>
-        </div>
+        </AnimatedSection>
 
         {/* 2-Column Suite with Mobile Stacking */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-10 lg:gap-12 items-start">
           {/* Form (7 cols) */}
-          <form
-            onSubmit={handleWhatsAppBooking}
-            className="lg:col-span-7 bg-[#140f0c] p-5 sm:p-8 rounded-2xl border border-amber-500/30 shadow-2xl space-y-5 sm:space-y-6"
-          >
+          <AnimatedSection direction="right" delay={150} className="lg:col-span-7 w-full">
+            <form
+              onSubmit={handleWhatsAppBooking}
+              className="bg-[#140f0c] p-5 sm:p-8 rounded-2xl border border-amber-500/30 shadow-2xl space-y-5 sm:space-y-6"
+            >
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <label className="block text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-amber-300/90 mb-1.5 sm:mb-2">
@@ -245,55 +249,56 @@ Please confirm table availability. Thank you!`;
               </a>
             </div>
           </form>
+        </AnimatedSection>
 
-          {/* Right: Live Reservation Pass Preview (5 cols) */}
-          <div className="lg:col-span-5 space-y-4 sm:space-y-5">
-            <div className="bg-[#140f0c] rounded-2xl border border-amber-500/30 p-5 sm:p-6 overflow-hidden shadow-2xl">
-              <div className="flex items-center justify-between pb-3 border-b border-amber-900/30 text-xs text-stone-400">
-                <span className="flex items-center gap-2 text-emerald-400 font-bold uppercase tracking-wider text-[11px] sm:text-xs">
-                  <span className="w-2 h-2 rounded-full bg-emerald-400" />
-                  Live WhatsApp Message Preview
-                </span>
-                <span className="font-mono text-[11px] text-amber-400">Keshari Dhaba</span>
-              </div>
-
-              {/* Chat Bubble simulation */}
-              <div className="mt-3.5 p-4 sm:p-5 rounded-xl bg-emerald-950/30 border border-emerald-800/40 text-stone-200 text-xs sm:text-sm font-sans space-y-2 leading-relaxed whitespace-pre-line shadow-inner break-words">
-                {formattedMessage}
-              </div>
-
-              <div className="mt-4 pt-3.5 border-t border-amber-900/30 space-y-2 text-xs text-stone-300">
-                <div className="flex items-center gap-2">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
-                  <span>Direct connection to dining hall manager</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
-                  <span>Special arrangements for large tour bus groups</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
-                  <span>Pure vegetarian food cooked in pure Desi Ghee</span>
-                </div>
-              </div>
+        {/* Right: Live Reservation Pass Preview (5 cols) */}
+        <AnimatedSection direction="left" delay={250} className="lg:col-span-5 w-full space-y-4 sm:space-y-5">
+          <div className="bg-[#140f0c] rounded-2xl border border-amber-500/30 p-5 sm:p-6 overflow-hidden shadow-2xl">
+            <div className="flex items-center justify-between pb-3 border-b border-amber-900/30 text-xs text-stone-400">
+              <span className="flex items-center gap-2 text-emerald-400 font-bold uppercase tracking-wider text-[11px] sm:text-xs">
+                <span className="w-2 h-2 rounded-full bg-emerald-400" />
+                Live WhatsApp Message Preview
+              </span>
+              <span className="font-mono text-[11px] text-amber-400">Keshari Dhaba</span>
             </div>
 
-            {/* Quick Call Box */}
-            <div className="p-4 sm:p-5 rounded-xl bg-gradient-to-r from-amber-950/80 to-[#1c140d] border border-amber-500/30 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-xl">
-              <div>
-                <div className="text-xs font-bold uppercase tracking-wider text-amber-300">Arriving in Next 15 Mins?</div>
-                <div className="text-[11px] text-stone-400 mt-0.5">Call directly to have your table set & ready</div>
+            {/* Chat Bubble simulation */}
+            <div className="mt-3.5 p-4 sm:p-5 rounded-xl bg-emerald-950/30 border border-emerald-800/40 text-stone-200 text-xs sm:text-sm font-sans space-y-2 leading-relaxed whitespace-pre-line shadow-inner break-words">
+              {formattedMessage}
+            </div>
+
+            <div className="mt-4 pt-3.5 border-t border-amber-900/30 space-y-2 text-xs text-stone-300">
+              <div className="flex items-center gap-2">
+                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                <span>Direct connection to dining hall manager</span>
               </div>
-              <a
-                href={`tel:${restaurantInfo.phonePrimary.replace(/\s+/g, '')}`}
-                className="px-4 py-2.5 bg-amber-500 hover:bg-amber-400 text-stone-950 font-bold text-xs uppercase tracking-wider rounded-lg transition-colors flex items-center justify-center gap-1.5 shrink-0 shadow-md min-h-[40px]"
-              >
-                <Phone className="w-3.5 h-3.5" />
-                <span>Call Now</span>
-              </a>
+              <div className="flex items-center gap-2">
+                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                <span>Special arrangements for large tour bus groups</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                <span>Pure vegetarian food cooked in pure Desi Ghee</span>
+              </div>
             </div>
           </div>
-        </div>
+
+          {/* Quick Call Box */}
+          <div className="p-4 sm:p-5 rounded-xl bg-gradient-to-r from-amber-950/80 to-[#1c140d] border border-amber-500/30 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-xl">
+            <div>
+              <div className="text-xs font-bold uppercase tracking-wider text-amber-300">Arriving in Next 15 Mins?</div>
+              <div className="text-[11px] text-stone-400 mt-0.5">Call directly to have your table set & ready</div>
+            </div>
+            <a
+              href={`tel:${restaurantInfo.phonePrimary.replace(/\s+/g, '')}`}
+              className="px-4 py-2.5 bg-amber-500 hover:bg-amber-400 text-stone-950 font-bold text-xs uppercase tracking-wider rounded-lg transition-all duration-200 hover:scale-105 active:scale-95 flex items-center justify-center gap-1.5 shrink-0 shadow-md min-h-[40px]"
+            >
+              <Phone className="w-3.5 h-3.5" />
+              <span>Call Now</span>
+            </a>
+          </div>
+        </AnimatedSection>
+      </div>
       </div>
     </section>
   );
