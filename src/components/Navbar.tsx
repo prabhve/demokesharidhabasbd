@@ -23,6 +23,30 @@ export const Navbar: React.FC<NavbarProps> = ({ orderCount = 0, onOpenOrderDrawe
   const [activeSection, setActiveSection] = useState<string>('');
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
 
+  // Handle smooth scroll navigation with sticky header offset
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    if (href.startsWith('#')) {
+      e.preventDefault();
+      const targetId = href.slice(1);
+      if (!targetId) {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        return;
+      }
+      const targetEl = document.getElementById(targetId);
+      if (targetEl) {
+        const headerOffset = 80;
+        const elementPosition = targetEl.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth',
+        });
+        setActiveSection(targetId);
+        setMobileMenuOpen(false);
+      }
+    }
+  };
+
   // Active section scrollspy
   useEffect(() => {
     const handleScroll = () => {
@@ -59,16 +83,24 @@ export const Navbar: React.FC<NavbarProps> = ({ orderCount = 0, onOpenOrderDrawe
 
   return (
     <>
-      {/* Top Special Notice Bar if enabled by Admin */}
+      {/* Top Special Notice Bar if enabled by Admin - Smoothly hides on scroll */}
       {announcement.enabled && announcement.text && (
-        <div className="bg-gradient-to-r from-amber-600 via-amber-500 to-amber-600 text-stone-950 text-[11px] sm:text-xs py-1.5 px-3 text-center font-bold tracking-wide flex items-center justify-center gap-2">
+        <div
+          className={`bg-gradient-to-r from-amber-600 via-amber-500 to-amber-600 text-stone-950 text-[11px] sm:text-xs text-center font-bold tracking-wide flex items-center justify-center gap-2 overflow-hidden transition-all duration-300 ${
+            isScrolled ? 'max-h-0 py-0 opacity-0 pointer-events-none' : 'max-h-12 py-1.5 px-3 opacity-100'
+          }`}
+        >
           <Sparkles className="w-3.5 h-3.5 shrink-0" />
           <span>{announcement.text}</span>
         </div>
       )}
 
-      {/* Top Luxury Announcement Ribbon - Mobile Optimized */}
-      <div className="bg-[#120e0a] text-amber-200/90 text-[10px] sm:text-xs py-1.5 px-3 sm:px-4 border-b border-amber-900/30">
+      {/* Top Luxury Announcement Ribbon - Smoothly hides on scroll */}
+      <div
+        className={`bg-[#120e0a] text-amber-200/90 text-[10px] sm:text-xs border-b border-amber-900/30 overflow-hidden transition-all duration-300 ${
+          isScrolled ? 'max-h-0 py-0 opacity-0 border-b-0 pointer-events-none' : 'max-h-16 py-1.5 px-3 sm:px-4 opacity-100'
+        }`}
+      >
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-2">
           <div className="flex items-center gap-2 sm:gap-6 min-w-0">
             <span className="flex items-center gap-1 text-stone-300 min-w-0">
@@ -138,13 +170,14 @@ export const Navbar: React.FC<NavbarProps> = ({ orderCount = 0, onOpenOrderDrawe
                 <a
                   key={link.id}
                   href={link.href}
-                  className={`relative py-1 ${
+                  onClick={(e) => handleNavClick(e, link.href)}
+                  className={`relative py-1 cursor-pointer ${
                     isActive ? 'text-amber-400 font-bold' : 'hover:text-amber-300 text-stone-300'
                   }`}
                 >
                   <span>{link.label}</span>
                   {isActive && (
-                    <div className="absolute -bottom-1 left-0 right-0 h-[2.5px] bg-gradient-to-r from-amber-500 via-amber-300 to-yellow-200 rounded-full shadow-[0_0_8px_rgba(251,191,36,0.8)] animate-pulse" />
+                    <div className="absolute -bottom-1 left-0 right-0 h-[2.5px] bg-gradient-to-r from-amber-500 via-amber-300 to-yellow-200 rounded-full shadow-[0_0_8px_rgba(251,191,36,0.8)]" />
                   )}
                 </a>
               );
@@ -174,7 +207,8 @@ export const Navbar: React.FC<NavbarProps> = ({ orderCount = 0, onOpenOrderDrawe
 
             <a
               href="#booking"
-              className="px-3 sm:px-4 py-2 sm:py-2.5 text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-stone-950 bg-gradient-to-r from-amber-400 via-amber-500 to-amber-400 hover:from-amber-300 hover:to-amber-400 rounded-lg whitespace-nowrap shadow-lg shadow-amber-950/50 border border-amber-300/40"
+              onClick={(e) => handleNavClick(e, '#booking')}
+              className="px-3 sm:px-4 py-2 sm:py-2.5 text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-stone-950 bg-gradient-to-r from-amber-400 via-amber-500 to-amber-400 hover:from-amber-300 hover:to-amber-400 rounded-lg whitespace-nowrap shadow-lg shadow-amber-950/50 border border-amber-300/40 cursor-pointer"
             >
               Book Table
             </a>
@@ -199,10 +233,10 @@ export const Navbar: React.FC<NavbarProps> = ({ orderCount = 0, onOpenOrderDrawe
                 <a
                   key={link.id}
                   href={link.href}
-                  onClick={() => setMobileMenuOpen(false)}
-                  className={`py-3 px-3.5 rounded-xl flex items-center justify-between min-h-[44px] ${
+                  onClick={(e) => handleNavClick(e, link.href)}
+                  className={`py-3 px-3.5 rounded-xl flex items-center justify-between min-h-[44px] cursor-pointer ${
                     activeSection === link.id
-                      ? 'bg-amber-500/20 text-amber-300 border border-amber-500/30'
+                      ? 'bg-amber-500/20 text-amber-300 border border-amber-500/30 font-bold'
                       : 'hover:bg-[#1a140f] text-stone-300 hover:text-white active:bg-amber-500/10'
                   }`}
                 >

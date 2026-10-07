@@ -83,7 +83,7 @@ interface AdminDataContextType {
   deleteOrder: (id: string) => void;
 
   tableBookings: TableBookingRecord[];
-  addTableBooking: (booking: Omit<TableBookingRecord, 'id' | 'status'>) => void;
+  addTableBooking: (booking: Omit<TableBookingRecord, 'id' | 'status' | 'timestamp'> & { timestamp?: string }) => void;
   updateBookingStatus: (id: string, status: TableBookingRecord['status']) => void;
   deleteBooking: (id: string) => void;
 
@@ -468,8 +468,9 @@ export const AdminDataProvider: React.FC<{ children: React.ReactNode }> = ({ chi
     setLiveOrders((prev) => prev.filter((ord) => ord.id !== id));
   };
 
-  const addTableBooking = (bookingData: Omit<TableBookingRecord, 'id' | 'status'>) => {
+  const addTableBooking = (bookingData: Omit<TableBookingRecord, 'id' | 'status' | 'timestamp'> & { timestamp?: string }) => {
     const newBooking: TableBookingRecord = {
+      timestamp: bookingData.timestamp || `Today, ${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`,
       ...bookingData,
       id: `book-${Date.now()}`,
       status: 'Confirmed',

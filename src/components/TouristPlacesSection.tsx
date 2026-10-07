@@ -25,6 +25,7 @@ import {
 import { TouristPlace } from '../data/restaurantData';
 import { useAdminData } from '../context/AdminDataContext';
 import { AnimatedSection } from './AnimatedSection';
+import { Card3D } from './Card3D';
 
 export const TouristPlacesSection: React.FC = () => {
   const { touristPlaces, restaurantInfo } = useAdminData();
@@ -86,26 +87,24 @@ export const TouristPlacesSection: React.FC = () => {
   };
 
   return (
-    <section id="tourist-places" className="py-16 sm:py-24 lg:py-32 bg-[#0d0a08] text-white border-b border-amber-900/30 relative overflow-hidden">
+    <section id="tourist-places" className="scroll-mt-24 sm:scroll-mt-28 lg:scroll-mt-32 py-16 sm:py-24 lg:py-32 bg-[#0d0a08] text-white border-b border-amber-900/30 relative overflow-hidden perspective-1200">
       {/* Background ambient glow */}
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-amber-600/5 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-1/3 left-0 w-[600px] h-[600px] bg-yellow-600/5 rounded-full blur-3xl pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
         {/* Section Header */}
-        <AnimatedSection direction="up" delay={50}>
-          <div className="max-w-3xl mb-8 sm:mb-12">
-            <div className="inline-flex items-center gap-2 text-[11px] sm:text-xs font-semibold uppercase tracking-widest text-amber-400 mb-2.5 px-3 py-1 rounded-full bg-amber-950/60 border border-amber-500/20">
-              <Compass className="w-3.5 h-3.5 text-amber-400" />
-              <span>Sonbhadra Tourism Guide & Highway Pitstop</span>
-            </div>
-            <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight text-balance leading-tight">
-              Explore Sonbhadra’s Wonders from <span className="text-gold-gradient italic">Keshari Dhaba</span>.
-            </h2>
-            <p className="mt-3 text-stone-300 text-xs sm:text-base leading-relaxed font-light">
-              Sonbhadra is Uttar Pradesh’s geological crown and ancient heritage jewel. Centrally located on the main highway in Robertsganj, Keshari Dhaba serves as your ideal tourism basecamp — energize with pure desi ghee parathas and hot chai before your adventure, or return for an evening handi dal feast.
-            </p>
+        <AnimatedSection direction="3d-rise" className="max-w-3xl mb-8 sm:mb-12">
+          <div className="inline-flex items-center gap-2 text-[11px] sm:text-xs font-semibold uppercase tracking-widest text-amber-400 mb-2.5 px-3 py-1 rounded-full bg-amber-950/60 border border-amber-500/20">
+            <Compass className="w-3.5 h-3.5 text-amber-400" />
+            <span>Sonbhadra Tourism Guide & Highway Pitstop</span>
           </div>
+          <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight text-balance leading-tight">
+            Explore Sonbhadra’s Wonders from <span className="text-gold-gradient italic">Keshari Dhaba</span>.
+          </h2>
+          <p className="mt-3 text-stone-300 text-xs sm:text-base leading-relaxed font-light">
+            Sonbhadra is Uttar Pradesh’s geological crown and ancient heritage jewel. Centrally located on the main highway in Robertsganj, Keshari Dhaba serves as your ideal tourism basecamp — energize with pure desi ghee parathas and hot chai before your adventure, or return for an evening handi dal feast.
+          </p>
         </AnimatedSection>
 
         {/* View Mode & Quick Metric Strip */}
@@ -409,43 +408,43 @@ export const TouristPlacesSection: React.FC = () => {
             return (
               <AnimatedSection
                 key={place.id}
-                direction="up"
-                delay={(index % 3) * 80}
+                direction="3d-rise"
+                delay={(index % 3) * 70}
+                className="h-full"
               >
-                <div
-                  className="group bg-[#140f0c] rounded-2xl border border-amber-900/30 overflow-hidden flex flex-col justify-between hover:border-amber-500/50 hover:shadow-2xl hover:shadow-amber-950/50 hover:-translate-y-1.5 transition-all duration-300 h-full"
-                >
-                  <div>
-                    {/* Photo with Overlay & Badges */}
-                    <div className="relative h-48 sm:h-52 overflow-hidden bg-stone-900">
-                      <img
-                        src={place.imageUrl}
-                        alt={place.name}
-                        loading="lazy"
-                        className="w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-108"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-[#140f0c] via-black/30 to-transparent" />
+                <Card3D maxTilt={5} scale={1.02} glare={true} className="h-full rounded-2xl">
+                  <div className="group bg-[#140f0c] rounded-2xl border border-amber-900/30 overflow-hidden flex flex-col justify-between hover:border-amber-500/50 shadow-xl h-full preserve-3d">
+                    <div>
+                      {/* Photo with Overlay & Badges */}
+                      <div className="relative h-48 sm:h-52 overflow-hidden bg-stone-900">
+                        <img
+                          src={place.imageUrl}
+                          alt={place.name}
+                          loading="lazy"
+                          className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-[#140f0c] via-black/30 to-transparent" />
 
-                    {/* Category Pill */}
-                    <div className="absolute top-3 left-3 bg-stone-950/85 backdrop-blur-xs text-amber-300 border border-amber-500/30 text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded shadow-sm">
-                      {place.category}
-                    </div>
+                        {/* Category Pill */}
+                        <div className="absolute top-3 left-3 bg-stone-950/85 backdrop-blur-xs text-amber-300 border border-amber-500/30 text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded shadow-sm translate-z-4">
+                          {place.category}
+                        </div>
 
-                    {/* Drive time badge */}
-                    <div className="absolute bottom-3 right-3 bg-stone-950/90 text-white text-[10px] sm:text-[11px] font-mono px-2 py-0.5 sm:px-2.5 sm:py-1 rounded backdrop-blur-xs flex items-center gap-1.5 border border-stone-800">
-                      <Clock className="w-3 h-3 text-amber-400" />
-                      <span>~{place.driveTimeMin} min drive</span>
-                    </div>
+                        {/* Drive time badge */}
+                        <div className="absolute bottom-3 right-3 bg-stone-950/90 text-white text-[10px] sm:text-[11px] font-mono px-2 py-0.5 sm:px-2.5 sm:py-1 rounded backdrop-blur-xs flex items-center gap-1.5 border border-stone-800 translate-z-4">
+                          <Clock className="w-3 h-3 text-amber-400" />
+                          <span>~{place.driveTimeMin} min drive</span>
+                        </div>
 
-                    {/* Distance from Dhaba badge */}
-                    <div className="absolute bottom-3 left-3 bg-amber-500 text-stone-950 font-bold text-[10px] sm:text-[11px] px-2 py-0.5 sm:px-2.5 sm:py-1 rounded flex items-center gap-1 shadow-md">
-                      <MapPin className="w-3 h-3 text-stone-950" />
-                      <span>{place.distanceKm} km from Dhaba</span>
-                    </div>
-                  </div>
+                        {/* Distance from Dhaba badge */}
+                        <div className="absolute bottom-3 left-3 bg-amber-500 text-stone-950 font-bold text-[10px] sm:text-[11px] px-2 py-0.5 sm:px-2.5 sm:py-1 rounded flex items-center gap-1 shadow-md translate-z-6">
+                          <MapPin className="w-3 h-3 text-stone-950" />
+                          <span>{place.distanceKm} km from Dhaba</span>
+                        </div>
+                      </div>
 
-                  {/* Content Section */}
-                  <div className="p-4 sm:p-5">
+                      {/* Content Section */}
+                      <div className="p-4 sm:p-5 translate-z-2">
                     <div className="flex items-start justify-between gap-2">
                       <h3 className="font-serif text-lg sm:text-xl font-bold text-white group-hover:text-amber-300 leading-snug">
                         {place.name}
@@ -600,10 +599,11 @@ export const TouristPlacesSection: React.FC = () => {
                   )}
                 </div>
               </div>
-            </AnimatedSection>
-            );
-          })}
-        </div>
+            </Card3D>
+          </AnimatedSection>
+          );
+        })}
+      </div>
 
         {/* ============================================================== */}
         {/* WHY KESHARI DHABA IS YOUR TOURIST BASECAMP                     */}

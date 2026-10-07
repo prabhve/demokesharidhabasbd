@@ -1,6 +1,8 @@
 import { useState } from 'react';
-import { Phone, MessageCircle, Utensils, ShieldAlert } from 'lucide-react';
+import { Phone, MessageCircle, Utensils } from 'lucide-react';
 import { MenuItem } from './data/restaurantData';
+import { ScrollProgressBar } from './components/ScrollProgressBar';
+import { Floating3DBackground } from './components/Floating3DBackground';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { AboutSection } from './components/AboutSection';
@@ -13,7 +15,6 @@ import { ContactSection } from './components/ContactSection';
 import { Footer } from './components/Footer';
 import { OrderCalculatorDrawer, OrderType } from './components/OrderCalculatorDrawer';
 import { ScrollToTop } from './components/ScrollToTop';
-import { ScrollProgressBar } from './components/ScrollProgressBar';
 import { AdminDataProvider, useAdminData } from './context/AdminDataContext';
 import { AdminSecurityModal } from './components/admin/AdminSecurityModal';
 import { AdminPanelModal } from './components/admin/AdminPanelModal';
@@ -63,9 +64,12 @@ function MainApp() {
   const totalItemCount = Object.values(orderItems).reduce((sum, count) => sum + count, 0);
 
   return (
-    <div className="min-h-screen bg-[#0c0907] text-stone-100 flex flex-col selection:bg-amber-500 selection:text-stone-950 font-sans antialiased overflow-x-hidden">
-      {/* Scroll Progress Bar across the whole site */}
+    <div className="min-h-screen bg-[#0c0907] text-stone-100 flex flex-col selection:bg-amber-500 selection:text-stone-950 font-sans antialiased overflow-x-hidden relative">
+      {/* 3D Hardware Accelerated Scroll Progress Indicator */}
       <ScrollProgressBar />
+
+      {/* 3D Atmospheric Floating Embers & Parallax Particles */}
+      <Floating3DBackground />
 
       {/* Top Bar Navigation */}
       <Navbar
@@ -141,11 +145,11 @@ function MainApp() {
       {/* Sticky Mobile Quick Action Bar */}
       <aside
         aria-label="Quick Mobile Actions"
-        className="lg:hidden fixed bottom-0 left-0 right-0 z-30 bg-[#120e0a] border-t border-amber-900/40 px-3 py-2 flex items-center justify-between gap-2 shadow-2xl"
+        className="lg:hidden fixed bottom-0 left-0 right-0 z-30 bg-[#120e0a]/95 backdrop-blur-md border-t border-amber-900/40 px-3 py-2 flex items-center justify-between gap-2.5 shadow-2xl"
       >
         <a
           href={`tel:${restaurantInfo.phonePrimary.replace(/\s+/g, '')}`}
-          className="flex-1 py-3 px-3 bg-[#1c1612] hover:bg-[#282019] text-stone-200 text-xs font-semibold uppercase tracking-wider rounded-xl flex items-center justify-center gap-1.5 border border-amber-900/30 min-h-[44px]"
+          className="flex-1 py-3 px-3 bg-[#1c1612] hover:bg-[#282019] text-stone-200 text-xs font-semibold uppercase tracking-wider rounded-xl flex items-center justify-center gap-1.5 border border-amber-900/30 min-h-[44px] active:scale-95 transition-transform"
         >
           <Phone className="w-4 h-4 text-amber-400" />
           <span>Call</span>
@@ -153,24 +157,15 @@ function MainApp() {
 
         <a
           href="#menu"
-          className="py-3 px-3.5 bg-[#1c1612] hover:bg-[#282019] text-amber-300 text-xs font-semibold uppercase tracking-wider rounded-xl flex items-center justify-center gap-1.5 border border-amber-900/30 min-h-[44px]"
+          className="flex-1 py-3 px-3 bg-[#1c1612] hover:bg-[#282019] text-amber-300 text-xs font-semibold uppercase tracking-wider rounded-xl flex items-center justify-center gap-1.5 border border-amber-900/30 min-h-[44px] active:scale-95 transition-transform"
         >
           <Utensils className="w-4 h-4 text-amber-400" />
           <span>Menu</span>
         </a>
 
-        <button
-          onClick={() => setIsSecurityModalOpen(true)}
-          className="p-3 bg-[#1c1612] hover:bg-[#282019] text-amber-400 rounded-xl border border-amber-900/30 flex items-center justify-center min-h-[44px] min-w-[44px] cursor-pointer"
-          aria-label="Staff Portal"
-          title="Staff Portal"
-        >
-          <ShieldAlert className="w-4 h-4" />
-        </button>
-
         <a
           href="#booking"
-          className="flex-1 py-3 px-3 bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-500 hover:to-emerald-600 text-white text-xs font-bold uppercase tracking-wider rounded-xl flex items-center justify-center gap-1.5 shadow-md border border-emerald-400/30 min-h-[44px]"
+          className="flex-1 py-3 px-3 bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-500 hover:to-emerald-600 text-white text-xs font-bold uppercase tracking-wider rounded-xl flex items-center justify-center gap-1.5 shadow-md border border-emerald-400/30 min-h-[44px] active:scale-95 transition-transform"
         >
           <MessageCircle className="w-4 h-4 text-emerald-200" />
           <span>Book WhatsApp</span>

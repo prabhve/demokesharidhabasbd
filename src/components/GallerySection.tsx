@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Maximize2, X, ChevronLeft, ChevronRight, Sparkles, Trees, UtensilsCrossed, Flame, Wind } from 'lucide-react';
 import { useAdminData } from '../context/AdminDataContext';
 import { AnimatedSection } from './AnimatedSection';
+import { Card3D } from './Card3D';
 
 export interface GalleryItem {
   id: string;
@@ -205,7 +206,7 @@ export const GallerySection: React.FC = () => {
   };
 
   return (
-    <section id="gallery" className="py-16 sm:py-20 lg:py-28 bg-[#0c0907] text-white border-b border-amber-900/30 relative overflow-hidden">
+    <section id="gallery" className="scroll-mt-24 sm:scroll-mt-28 lg:scroll-mt-32 py-16 sm:py-20 lg:py-28 bg-[#0c0907] text-white border-b border-amber-900/30 relative overflow-hidden perspective-1200">
       {/* Ambient background glows */}
       <div className="absolute top-1/4 right-0 w-80 sm:w-96 h-80 sm:h-96 bg-amber-600/5 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-10 left-10 w-80 sm:w-96 h-80 sm:h-96 bg-orange-600/5 rounded-full blur-3xl pointer-events-none" />
@@ -243,7 +244,7 @@ export const GallerySection: React.FC = () => {
                 <button
                   key={cat.id}
                   onClick={() => setActiveCategory(cat.id)}
-                  className={`relative px-3.5 sm:px-4 py-2 sm:py-2.5 text-[11px] sm:text-xs font-semibold uppercase tracking-wider rounded-xl whitespace-nowrap flex items-center gap-2 cursor-pointer shrink-0 min-h-[38px] transition-all duration-200 hover:scale-105 active:scale-95 ${
+                  className={`relative px-3.5 sm:px-4 py-2 sm:py-2.5 text-[11px] sm:text-xs font-semibold uppercase tracking-wider rounded-xl whitespace-nowrap flex items-center gap-2 cursor-pointer shrink-0 min-h-[38px] ${
                     isActive
                       ? 'bg-amber-500 text-stone-950 font-bold shadow-md'
                       : 'bg-[#16120e] text-stone-300 hover:text-white border border-amber-900/30'
@@ -262,58 +263,60 @@ export const GallerySection: React.FC = () => {
           {filteredItems.map((item, index) => (
             <AnimatedSection
               key={item.id}
-              direction="up"
-              delay={(index % 4) * 80}
-              className="break-inside-avoid"
+              direction="3d-rise"
+              delay={(index % 4) * 60}
+              className="break-inside-avoid mb-4 sm:mb-6"
             >
-              <div
-                onClick={() => setSelectedItem(item)}
-                className="group relative rounded-2xl overflow-hidden bg-[#140f0c] border border-amber-900/30 hover:border-amber-500/50 cursor-pointer transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-amber-950/40"
-              >
-                {/* Full-width Image with natural aspect ratios */}
-                <div className={`relative w-full ${item.aspectRatioClass} overflow-hidden`}>
-                  <img
-                    src={item.imageUrl}
-                    alt={item.title}
-                    loading="lazy"
-                    className="w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-108"
-                  />
+              <Card3D maxTilt={5} scale={1.02} glare={true} className="rounded-2xl">
+                <div
+                  onClick={() => setSelectedItem(item)}
+                  className="group relative rounded-2xl overflow-hidden bg-[#140f0c] border border-amber-900/30 hover:border-amber-500/50 cursor-pointer hover:shadow-2xl hover:shadow-amber-950/40 preserve-3d"
+                >
+                  {/* Full-width Image with natural aspect ratios */}
+                  <div className={`relative w-full ${item.aspectRatioClass} overflow-hidden`}>
+                    <img
+                      src={item.imageUrl}
+                      alt={item.title}
+                      loading="lazy"
+                      className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
+                    />
 
-                  {/* Atmospheric Dark Gradient Overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/35 to-black/10 opacity-75 group-hover:opacity-65 transition-opacity" />
+                    {/* Atmospheric Dark Gradient Overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/35 to-black/10 opacity-75 group-hover:opacity-65 transition-opacity" />
 
-                  {/* Top Category Badge */}
-                  <div className="absolute top-3 left-3 flex items-center gap-2">
-                    <span className="px-2.5 py-1 rounded-md bg-stone-950/80 text-[10px] font-bold uppercase tracking-wider text-amber-300 border border-amber-500/30 shadow-sm">
-                      {item.highlightTag}
-                    </span>
-                  </div>
+                    {/* Top Category Badge with 3D Pop */}
+                    <div className="absolute top-3 left-3 flex items-center gap-2 translate-z-4">
+                      <span className="px-2.5 py-1 rounded-md bg-stone-950/80 text-[10px] font-bold uppercase tracking-wider text-amber-300 border border-amber-500/30 shadow-sm">
+                        {item.highlightTag}
+                      </span>
+                    </div>
 
-                  {/* Expand Icon */}
-                  <div className="absolute top-3 right-3 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-stone-950/80 flex items-center justify-center text-amber-300 border border-amber-500/30 shadow-md group-hover:bg-amber-500 group-hover:text-stone-950 transition-colors">
-                    <Maximize2 className="w-3.5 h-3.5" />
-                  </div>
+                    {/* Expand Icon */}
+                    <div className="absolute top-3 right-3 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-stone-950/80 flex items-center justify-center text-amber-300 border border-amber-500/30 shadow-md group-hover:bg-amber-500 group-hover:text-stone-950 transition-colors translate-z-6">
+                      <Maximize2 className="w-3.5 h-3.5" />
+                    </div>
 
-                  {/* Caption / Title info at bottom */}
-                  <div className="absolute bottom-0 inset-x-0 p-4 sm:p-5">
-                    <span className="text-[10px] font-semibold text-amber-400 uppercase tracking-widest block mb-1">
-                      {item.categoryLabel}
-                    </span>
-                    <h3 className="font-serif text-base sm:text-lg font-bold text-white leading-snug">
-                      {item.title}
-                    </h3>
-                    {item.hindiTitle && (
-                      <div className="text-xs text-amber-200/70 font-serif mt-0.5">
-                        {item.hindiTitle}
-                      </div>
-                    )}
+                    {/* Caption / Title info at bottom */}
+                    <div className="absolute bottom-0 inset-x-0 p-4 sm:p-5 translate-z-2">
+                      <span className="text-[10px] font-semibold text-amber-400 uppercase tracking-widest block mb-1">
+                        {item.categoryLabel}
+                      </span>
+                      <h3 className="font-serif text-base sm:text-lg font-bold text-white leading-snug">
+                        {item.title}
+                      </h3>
+                      {item.hindiTitle && (
+                        <div className="text-xs text-amber-200/70 font-serif mt-0.5">
+                          {item.hindiTitle}
+                        </div>
+                      )}
 
-                    <p className="mt-1.5 text-stone-300 text-xs line-clamp-2 font-light leading-relaxed block">
-                      {item.caption}
-                    </p>
+                      <p className="mt-1.5 text-stone-300 text-xs line-clamp-2 font-light leading-relaxed block">
+                        {item.caption}
+                      </p>
+                    </div>
                   </div>
                 </div>
-              </div>
+              </Card3D>
             </AnimatedSection>
           ))}
         </div>

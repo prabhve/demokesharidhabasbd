@@ -13,7 +13,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenAdmin }) => {
   return (
     <footer className="bg-[#080605] text-stone-400 text-xs border-t border-amber-900/30">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-12 sm:pt-14 pb-28 sm:pb-24 lg:pb-16">
-        <AnimatedSection direction="up" delay={50}>
+        <AnimatedSection direction="3d-rise" delay={50}>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10">
             {/* Col 1: Brand & Heritage */}
           <div className="space-y-3.5 sm:space-y-4">
@@ -160,7 +160,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenAdmin }) => {
       </AnimatedSection>
 
       {/* Bottom Bar with 100-Layer Protected Admin Portal Entry */}
-      <AnimatedSection direction="up" delay={150}>
+      <AnimatedSection direction="3d-rise" delay={120}>
         <div className="mt-10 sm:mt-14 pt-6 border-t border-amber-900/30 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-stone-500 text-center sm:text-left">
           <div>
             © {new Date().getFullYear()} Keshari Dhaba & Family Restaurant. All rights reserved.
