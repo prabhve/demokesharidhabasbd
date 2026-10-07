@@ -23,9 +23,13 @@ export interface LiveOrder {
   grandTotal: number;
   paymentStatus: 'PAID_ONLINE' | 'PAYMENT_PENDING';
   upiRef?: string;
+  tableNumber?: string;
+  pickupEta?: string;
+  vehicleNumber?: string;
   hostelLocation?: string;
   roomNumber?: string;
   deliveryNotes?: string;
+  summaryPoints?: string[];
   timestamp: string;
   status: 'Pending' | 'Preparing' | 'Out for Delivery' | 'Delivered' | 'Cancelled';
 }
@@ -160,6 +164,7 @@ const INITIAL_ORDERS: LiveOrder[] = [
     customerName: 'Dr. R. K. Mishra',
     customerPhone: '+91 91200 44556',
     orderType: 'Dine-in',
+    tableNumber: 'Table T-4 (AC Hall)',
     items: [
       { id: 'dish-2', name: 'Dhaba Dal Makhani with White Butter', price: 210, qty: 2 },
       { id: 'dish-11', name: 'Charred Garlic Butter Naan', price: 60, qty: 4 },
@@ -169,8 +174,47 @@ const INITIAL_ORDERS: LiveOrder[] = [
     deliveryCharge: 0,
     grandTotal: 880,
     paymentStatus: 'PAID_ONLINE',
+    upiRef: 'UPI-HDFC-88291039',
+    summaryPoints: [
+      'Dine-in Table: Table T-4 (AC Hall)',
+      'Customer: Dr. R. K. Mishra',
+      'Contact: +91 91200 44556',
+      'Total Bill: ₹880',
+      'Payment: Paid Online via QR',
+    ],
     timestamp: 'Today, 03:10 PM',
     status: 'Delivered',
+  },
+  {
+    id: 'ord-104',
+    orderId: 'HW-8201',
+    customerName: 'Vikram Rajput',
+    customerPhone: '+91 98380 91827',
+    orderType: 'Highway Takeaway',
+    pickupEta: 'In 20 mins (Passing Churk Toll)',
+    vehicleNumber: 'UP 64 AB 9821',
+    items: [
+      { id: 'dish-1', name: 'Keshari Special Handi Dal Tadka', price: 180, qty: 2 },
+      { id: 'dish-9', name: 'Amritsari Stuffed Paneer Kulcha', price: 90, qty: 4 },
+      { id: 'dish-16', name: 'Special Masala Ginger Kulhad Chai', price: 25, qty: 4 },
+    ],
+    dishesSubtotal: 820,
+    deliveryCharge: 0,
+    grandTotal: 820,
+    paymentStatus: 'PAID_ONLINE',
+    upiRef: 'UPI-GPAY-77382910',
+    summaryPoints: [
+      'Order Mode: Highway Express Parcel',
+      'Pickup Customer: Vikram Rajput',
+      'Contact Phone: +91 98380 91827',
+      'Pickup ETA: In 20 mins (Passing Churk Toll)',
+      'Vehicle No.: UP 64 AB 9821',
+      'Dishes: 2x Handi Dal Tadka, 4x Paneer Kulcha, 4x Kulhad Chai',
+      'Total Amount: ₹820',
+      'Payment Status: ✅ Paid Online via QR (UPI Ref: UPI-GPAY-77382910)',
+    ],
+    timestamp: 'Today, 04:20 PM',
+    status: 'Preparing',
   },
 ];
 

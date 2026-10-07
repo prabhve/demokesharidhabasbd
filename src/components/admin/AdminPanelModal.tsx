@@ -753,6 +753,16 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({ isOpen, onClos
                         <div className="text-stone-400 text-[11px]">
                           {order.items.map((i) => `${i.qty}x ${i.name}`).join(', ')}
                         </div>
+                        {order.tableNumber && (
+                          <div className="text-amber-300 text-[11px] font-semibold">
+                            🍽️ Table No: {order.tableNumber}
+                          </div>
+                        )}
+                        {order.pickupEta && (
+                          <div className="text-emerald-300 text-[11px] font-semibold">
+                            🚗 Highway Pickup ETA: {order.pickupEta} {order.vehicleNumber ? `• Vehicle: ${order.vehicleNumber}` : ''}
+                          </div>
+                        )}
                         {order.hostelLocation && (
                           <div className="text-amber-300 text-[11px]">
                             🎓 Drop: {order.hostelLocation} {order.roomNumber ? `(${order.roomNumber})` : ''}
@@ -923,6 +933,24 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({ isOpen, onClos
                         </a>
                       </div>
 
+                      {order.tableNumber && (
+                        <div>
+                          <div className="text-stone-500 font-semibold uppercase text-[10px]">Dine-in Table</div>
+                          <div className="text-amber-300 font-bold text-sm mt-0.5">{order.tableNumber}</div>
+                          <div className="text-[10px] text-stone-400">Indoor / Outdoor Seating</div>
+                        </div>
+                      )}
+
+                      {order.pickupEta && (
+                        <div>
+                          <div className="text-stone-500 font-semibold uppercase text-[10px]">Highway Takeaway Pickup</div>
+                          <div className="text-emerald-300 font-bold text-sm mt-0.5">{order.pickupEta}</div>
+                          {order.vehicleNumber && (
+                            <div className="text-stone-300 text-[11px]">Vehicle: {order.vehicleNumber}</div>
+                          )}
+                        </div>
+                      )}
+
                       {order.hostelLocation && (
                         <div>
                           <div className="text-stone-500 font-semibold uppercase text-[10px]">Campus Drop Point</div>
@@ -977,6 +1005,21 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({ isOpen, onClos
                           </span>
                         ))}
                       </div>
+                      {order.summaryPoints && order.summaryPoints.length > 0 && (
+                        <div className="mt-2.5 p-2.5 rounded-lg bg-[#19120e] border border-amber-900/30 space-y-1">
+                          <div className="text-[10px] font-bold text-amber-400 uppercase tracking-wider">
+                            Order Summary Highlights:
+                          </div>
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-1 text-[11px] text-stone-300">
+                            {order.summaryPoints.map((pt, pIdx) => (
+                              <div key={pIdx} className="flex items-start gap-1.5">
+                                <span className="text-amber-500 font-bold">•</span>
+                                <span>{pt}</span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
                       {order.deliveryNotes && (
                         <div className="mt-2 text-[11px] text-stone-400 italic">
                           Special Note: "{order.deliveryNotes}"

@@ -30,11 +30,14 @@ export const Navbar: React.FC<NavbarProps> = ({ orderCount = 0, onOpenOrderDrawe
       const targetId = href.slice(1);
       if (!targetId) {
         window.scrollTo({ top: 0, behavior: 'smooth' });
+        setActiveSection('');
+        setMobileMenuOpen(false);
         return;
       }
       const targetEl = document.getElementById(targetId);
       if (targetEl) {
-        const headerOffset = 80;
+        // Sticky header height offset
+        const headerOffset = 76;
         const elementPosition = targetEl.getBoundingClientRect().top;
         const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
         window.scrollTo({
@@ -47,17 +50,19 @@ export const Navbar: React.FC<NavbarProps> = ({ orderCount = 0, onOpenOrderDrawe
     }
   };
 
-  // Active section scrollspy
+  // Active section scrollspy and detect when scrolled away from home
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 30);
+      const scrollY = window.scrollY;
+      // When user scrolls down more than 20px, hide the top notification popup
+      setIsScrolled(scrollY > 20);
 
       const sectionElements = NAV_LINKS.map((link) => ({
         id: link.id,
         el: document.getElementById(link.id),
       }));
 
-      const scrollPos = window.scrollY + 160;
+      const scrollPos = scrollY + 160;
 
       for (let i = sectionElements.length - 1; i >= 0; i--) {
         const item = sectionElements[i];
@@ -71,7 +76,7 @@ export const Navbar: React.FC<NavbarProps> = ({ orderCount = 0, onOpenOrderDrawe
         }
       }
 
-      if (window.scrollY < 260) {
+      if (scrollY < 200) {
         setActiveSection('');
       }
     };
@@ -82,11 +87,11 @@ export const Navbar: React.FC<NavbarProps> = ({ orderCount = 0, onOpenOrderDrawe
   }, []);
 
   return (
-    <>
-      {/* Top Special Notice Bar if enabled by Admin - Smoothly hides on scroll */}
+    <div className="sticky top-0 z-40 w-full transition-all duration-300">
+      {/* Top Special Notice Pop-up Bar - Automatically hides on scroll / when leaving home */}
       {announcement.enabled && announcement.text && (
         <div
-          className={`bg-gradient-to-r from-amber-600 via-amber-500 to-amber-600 text-stone-950 text-[11px] sm:text-xs text-center font-bold tracking-wide flex items-center justify-center gap-2 overflow-hidden transition-all duration-300 ${
+          className={`bg-gradient-to-r from-amber-600 via-amber-500 to-amber-600 text-stone-950 text-[11px] sm:text-xs text-center font-bold tracking-wide flex items-center justify-center gap-2 overflow-hidden transition-all duration-300 ease-in-out ${
             isScrolled ? 'max-h-0 py-0 opacity-0 pointer-events-none' : 'max-h-12 py-1.5 px-3 opacity-100'
           }`}
         >
@@ -95,9 +100,9 @@ export const Navbar: React.FC<NavbarProps> = ({ orderCount = 0, onOpenOrderDrawe
         </div>
       )}
 
-      {/* Top Luxury Announcement Ribbon - Smoothly hides on scroll */}
+      {/* Top Contact & Location Ribbon - Automatically hides on scroll / when leaving home */}
       <div
-        className={`bg-[#120e0a] text-amber-200/90 text-[10px] sm:text-xs border-b border-amber-900/30 overflow-hidden transition-all duration-300 ${
+        className={`bg-[#120e0a] text-amber-200/90 text-[10px] sm:text-xs border-b border-amber-900/30 overflow-hidden transition-all duration-300 ease-in-out ${
           isScrolled ? 'max-h-0 py-0 opacity-0 border-b-0 pointer-events-none' : 'max-h-16 py-1.5 px-3 sm:px-4 opacity-100'
         }`}
       >
@@ -138,9 +143,9 @@ export const Navbar: React.FC<NavbarProps> = ({ orderCount = 0, onOpenOrderDrawe
         </div>
       </div>
 
-      {/* Main Luxury Header */}
+      {/* Main Header - Permanently Fixed and Visible */}
       <header
-        className={`sticky top-0 z-40 bg-[#0e0b08]/95 backdrop-blur-md border-b transition-all duration-300 ${
+        className={`bg-[#0e0b08]/95 backdrop-blur-md border-b transition-all duration-300 ${
           isScrolled
             ? 'border-amber-500/30 shadow-2xl py-0'
             : 'border-amber-500/20 shadow-xl'
@@ -148,7 +153,16 @@ export const Navbar: React.FC<NavbarProps> = ({ orderCount = 0, onOpenOrderDrawe
       >
         <div className="max-w-7xl mx-auto px-3 sm:px-6 h-16 sm:h-20 flex items-center justify-between">
           {/* Brand Identity with Hindi Subscript */}
-          <a href="#" className="flex items-center gap-2.5 sm:gap-3 group min-w-0">
+          <a
+            href="#"
+            onClick={(e) => {
+              e.preventDefault();
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+              setActiveSection('');
+              setMobileMenuOpen(false);
+            }}
+            className="flex items-center gap-2.5 sm:gap-3 group min-w-0 cursor-pointer"
+          >
             <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-gradient-to-br from-amber-500 via-amber-700 to-amber-950 flex items-center justify-center border border-amber-400/40 shadow-md group-hover:border-amber-300 transition-colors shrink-0">
               <UtensilsCrossed className="w-4 h-4 sm:w-5 sm:h-5 text-amber-100" />
             </div>
@@ -171,7 +185,7 @@ export const Navbar: React.FC<NavbarProps> = ({ orderCount = 0, onOpenOrderDrawe
                   key={link.id}
                   href={link.href}
                   onClick={(e) => handleNavClick(e, link.href)}
-                  className={`relative py-1 cursor-pointer ${
+                  className={`relative py-1 cursor-pointer transition-colors ${
                     isActive ? 'text-amber-400 font-bold' : 'hover:text-amber-300 text-stone-300'
                   }`}
                 >
@@ -189,7 +203,7 @@ export const Navbar: React.FC<NavbarProps> = ({ orderCount = 0, onOpenOrderDrawe
             {onOpenOrderDrawer && (
               <button
                 onClick={onOpenOrderDrawer}
-                className="hidden sm:inline-flex items-center gap-1.5 px-3 py-2 text-[11px] sm:text-xs font-semibold text-amber-300 bg-[#1e1712] hover:bg-[#2a2019] rounded-lg border border-amber-500/30 whitespace-nowrap cursor-pointer shadow-sm"
+                className="hidden sm:inline-flex items-center gap-1.5 px-3 py-2 text-[11px] sm:text-xs font-semibold text-amber-300 bg-[#1e1712] hover:bg-[#2a2019] rounded-lg border border-amber-500/30 whitespace-nowrap cursor-pointer shadow-sm transition-colors"
               >
                 <GraduationCap className="w-3.5 h-3.5 text-amber-400" />
                 <span>REC Delivery</span>
@@ -199,7 +213,7 @@ export const Navbar: React.FC<NavbarProps> = ({ orderCount = 0, onOpenOrderDrawe
             {orderCount > 0 && onOpenOrderDrawer && (
               <button
                 onClick={onOpenOrderDrawer}
-                className="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 sm:py-2 text-[11px] sm:text-xs font-semibold text-amber-900 bg-amber-400 hover:bg-amber-300 rounded-lg whitespace-nowrap shadow-md cursor-pointer"
+                className="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 sm:py-2 text-[11px] sm:text-xs font-semibold text-amber-900 bg-amber-400 hover:bg-amber-300 rounded-lg whitespace-nowrap shadow-md cursor-pointer transition-colors"
               >
                 <span>Bill ({orderCount})</span>
               </button>
@@ -208,7 +222,7 @@ export const Navbar: React.FC<NavbarProps> = ({ orderCount = 0, onOpenOrderDrawe
             <a
               href="#booking"
               onClick={(e) => handleNavClick(e, '#booking')}
-              className="px-3 sm:px-4 py-2 sm:py-2.5 text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-stone-950 bg-gradient-to-r from-amber-400 via-amber-500 to-amber-400 hover:from-amber-300 hover:to-amber-400 rounded-lg whitespace-nowrap shadow-lg shadow-amber-950/50 border border-amber-300/40 cursor-pointer"
+              className="px-3 sm:px-4 py-2 sm:py-2.5 text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-stone-950 bg-gradient-to-r from-amber-400 via-amber-500 to-amber-400 hover:from-amber-300 hover:to-amber-400 rounded-lg whitespace-nowrap shadow-lg shadow-amber-950/50 border border-amber-300/40 cursor-pointer transition-all"
             >
               Book Table
             </a>
@@ -234,7 +248,7 @@ export const Navbar: React.FC<NavbarProps> = ({ orderCount = 0, onOpenOrderDrawe
                   key={link.id}
                   href={link.href}
                   onClick={(e) => handleNavClick(e, link.href)}
-                  className={`py-3 px-3.5 rounded-xl flex items-center justify-between min-h-[44px] cursor-pointer ${
+                  className={`py-3 px-3.5 rounded-xl flex items-center justify-between min-h-[44px] cursor-pointer transition-colors ${
                     activeSection === link.id
                       ? 'bg-amber-500/20 text-amber-300 border border-amber-500/30 font-bold'
                       : 'hover:bg-[#1a140f] text-stone-300 hover:text-white active:bg-amber-500/10'
@@ -281,6 +295,6 @@ export const Navbar: React.FC<NavbarProps> = ({ orderCount = 0, onOpenOrderDrawe
           </div>
         )}
       </header>
-    </>
+    </div>
   );
 };
